@@ -1,5 +1,5 @@
 # croissant_project
- Fullstack team project at school. 
+    Fullstack team project at school. 
 
  
  # Work delegation
