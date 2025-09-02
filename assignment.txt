@@ -1,0 +1,20 @@
+
+Planningsysteem
+Bij de vakgroep Software Development willen ze een planningsysteem voor zowel studenten
+als docenten ontwikkelen. Het idee is dat studenten wekelijks of dagelijks een planning voor
+die week of dag invullen.
+Het planningssysteem werkt met zogenaamde “tickets”. Ieder vak is verdeeld in een aantal
+opdrachten. Per opdracht wordt een tijdsindicatie aangegeven. Het is de bedoeling dat
+studenten ongeveer 20 uur per week aan hun opdrachten spenderen. Afgeronde tickets
+kunnen niet opnieuw aan de planning worden toegevoegd.
+Aan het eind van de week of dag moet de student aangeven of de planning is gehaald en zo
+nee, waarom niet. Dit kan worden gecombineerd met het maken van een nieuwe planning.
+Docenten moeten vakken kunnen toevoegen/wijzigen/verwijderen en per vak tickets kunnen
+maken/wijzigen/verwijderen.
+Docenten moeten per groep/cohort een overzicht kunnen zien van studenten die al dan niet
+hun planning hebben ingevuld. Ook kunnen ze per individuele student zijn
+planningsoverzicht bekijken - dus de huidige en voorafgaande planningen.
+Studenten hebben toegang tot het planningssysteem middels hun schoolmail. Docenten
+(met een admin rol) kunnen studenten toevoegen middels lijsten met csv data (studentnr.
+voornaam, achternaam, groep).
+Docenten moeten handmatig kunnen worden toegevoegd en verwijderd.
