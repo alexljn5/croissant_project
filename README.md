@@ -1,14 +1,11 @@
 # croissant_project
-    Fullstack team project at school. 
+ Fullstack team project at school. 
 
  
  # Work delegation
-    UI/Web Designer: Rohit
-    Database Developer/Mentor: Jordy
-    Developer: Casper Wijzenbroek
-    Lead Developer/Scrum Master: Alexander
- #
+UI/Web Designer == Rohit
+Database Dev/Mentor == Jordy
+Developer == Casper
+Lead Developer/Scrum Master == Rohit
 
- #
 
- #
