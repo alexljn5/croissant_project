@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Croissant!</title>
     <link rel="icon" type="image/x-icon" href="./img/croissant.webp">
+    <link rel="stylesheet" href="styles.css">
+
 </head>
 
 <body>
