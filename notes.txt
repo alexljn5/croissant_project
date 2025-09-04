@@ -26,3 +26,10 @@ ik heb de ERD onder img gezet
 The password to access the database is currently admin. The database is called croissantdb.
 
 /////Alex////
+
+
+-- jordy
+
+wat als we php verbinden AAN een html file, dan hoef je alleen een html via browser te openen bvb
+
+---

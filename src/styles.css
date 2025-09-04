@@ -66,7 +66,7 @@ html, body {
 
 /* ongeldig/mislukte tekst 1 */
 .ongeldig {
-  color: #b71828;
+  color: #FF0000;
 }
 
 /* ongeldig/mislukte tekst 2 */
@@ -182,7 +182,7 @@ html, body {
 .inner-div:hover, .inner-div:focus {
   background: linear-gradient(to bottom, #eaffeb, #eaffeb, #ffffff);
   transform:translate();
-  box-shadow: 0px 0.45px 8px 0.65px rgba(221, 255, 228, 0.7);
+  box-shadow: 0px 0.45px 8px 0.65px rgba(255, 255, 255, 0.7);
   opacity: 100%;
 }
 
