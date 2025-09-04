@@ -18,4 +18,11 @@ dus de rang order:
 3. studenten
 
 ik heb de ERD onder img gezet
+--
 
+
+/////Alex////
+
+The password to access the database is currently admin. The database is called croissantdb.
+
+/////Alex////
