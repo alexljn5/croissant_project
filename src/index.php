@@ -1,3 +1,10 @@
+<?php
+
+?>
+
+^^^^^^^^^
+php hier boven
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,5 +22,4 @@
 </body>
 
 <div class="submit">hey</div>
-
 </html>
