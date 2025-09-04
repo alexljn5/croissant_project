@@ -1,0 +1,21 @@
+-- jordy
+
+ERD info:
+
+account tabel, houdt vaste informatie over alle accounts zoals: wachtwoord en email.
+de account tabel doet ook een check voor "isDocent", zodat duidelijk onstaat in de code
+
+tickets, tickets worden gemaakt door studenten en door docenten.
+students gebruiken tickets voor dagelijkse of wekelijkse plannen, docenten kunnen deze tickets checken
+elke ticket heeft een tijdsindicatie, bijvoorbeeld: je maakt een ticket op maandag met je week planning, hij verloopt op vrijdag
+
+docenten, kunnen tickets maken maar ook bekijken na verloop, kijken of een doel is behaald bvb.
+
+admins kunnen alles zien, maakt niet uit wat, admins hebben een hogere rang dan docenten en kunnen ook verwijderde dingen van docenten zien
+dus de rang order:
+1. admins
+2. docenten
+3. studenten
+
+ik heb de ERD onder img gezet
+
