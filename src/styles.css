@@ -4,10 +4,11 @@ table {
   width: auto;
 }
 
-    /*----------------------------------*/
+/*----------------------------------*/
 
 /* basis stijl */
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
@@ -39,7 +40,7 @@ html, body {
   background: linear-gradient(to bottom, #606060, #909090);
   border-radius: 6px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-  cursor:pointer;
+  cursor: pointer;
   transition: all 0.3s ease;
 }
 
@@ -50,7 +51,9 @@ html, body {
 }
 
 /* algemene feedback stijl */
-.geldig, .ongeldig, .ongeldig2 {
+.geldig,
+.ongeldig,
+.ongeldig2 {
   font-size: 0.95rem;
   font-style: italic;
   font-weight: bold;
@@ -80,9 +83,9 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* dit zou de volledige viewport pakken */
-  background: linear-gradient(
-  to bottom,  #eff9ff,  #ceecff, #a3dcff);
+  height: 100vh;
+  /* dit zou de volledige viewport pakken */
+  background: linear-gradient(to bottom, #eff9ff, #ceecff, #a3dcff);
 }
 
 .circle {
@@ -98,10 +101,13 @@ html, body {
   animation: float 6s ease-in-out infinite alternate;
 }
 
-@keyframes float { /*dit gebruikt "float" van eerder en geeft ons een minimale float "animatie"*/
+@keyframes float {
+
+  /*dit gebruikt "float" van eerder en geeft ons een minimale float "animatie"*/
   0% {
     transform: translateY(0px) translateX(0px);
   }
+
   100% {
     transform: translateY(-20px) translateX(10px);
   }
@@ -111,14 +117,14 @@ html, body {
 .outer-div {
   margin-bottom: 105px;
   border: 2px solid transparent;
-  border-style:ridge;
+  border-style: ridge;
   text-align: center;
   backdrop-filter: blur(150px);
-  -webkit-backdrop-filter: blur(10px); 
+  -webkit-backdrop-filter: blur(10px);
   width: 390px;
   padding: 25px;
   border-radius: 12px;
-  background: linear-gradient(to bottom right, rgba(255,255,255,0.5), rgba(200,200,200,0.5));
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.5), rgba(200, 200, 200, 0.5));
   box-shadow: 0px 0.45px 1.95px 0.65px rgba(255, 255, 255, 1);
 }
 
@@ -151,7 +157,7 @@ html, body {
   align-items: left;
   font-family: system-ui;
   color: #295098;
-  font-weight:normal;
+  font-weight: normal;
   font-size: medium;
   text-decoration: underline;
   opacity: 100%;
@@ -159,7 +165,7 @@ html, body {
 
 .outer-div a:hover {
   text-decoration: underline;
-  text-shadow:rgba(0, 0, 0, 0.1);
+  text-shadow: rgba(0, 0, 0, 0.1);
   font-size: medium;
   font-weight: 30%;
   font-display: auto;
@@ -179,9 +185,10 @@ html, body {
   transition: all 0.05s ease;
 }
 
-.inner-div:hover, .inner-div:focus {
+.inner-div:hover,
+.inner-div:focus {
   background: linear-gradient(to bottom, #eaffeb, #eaffeb, #ffffff);
-  transform:translate();
+  transform: translate();
   box-shadow: 0px 0.45px 8px 0.65px rgba(255, 255, 255, 0.7);
   opacity: 100%;
 }
@@ -189,22 +196,23 @@ html, body {
 .bodem {
   position: fixed;
   bottom: 0;
-  left: 50%; 
+  left: 50%;
   transform: translateX(-50%);
-  width: 100%;   
-  max-width: 1250px; 
+  width: 100%;
+  max-width: 1250px;
   height: 70px;
   margin: 0;
   padding: 5px 10px;
   opacity: 1;
   backdrop-filter: blur(150px);
   -webkit-backdrop-filter: blur(10px);
-  background: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0.5));
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));
   box-shadow: 0px 0.45px 1.95px 0.65px rgba(255, 255, 255, 1);
   align-items: left;
 }
 
-.bodem-tekst, p {
+.bodem-tekst,
+p {
   font-family: sans-serif;
   font-weight: lighter;
   font-display: auto;
@@ -213,4 +221,8 @@ html, body {
   text-indent: 4%;
   opacity: 1;
   margin: 0;
+}
+
+.header-container {
+  background-color: red;
 }

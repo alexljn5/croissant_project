@@ -7,7 +7,6 @@ php hier boven
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,8 +16,15 @@ php hier boven
 </head>
 
 <body>
-    <h1>Croissant!</h1>
+<div class="header-container">
+        <h1>Croissant!</h1>
+</div>
     <img src="./img/croissant.webp" alt="Croissant Image" width="200">
+
+    <div class="footer-container">
+        
+    </div>
+    
 </body>
 
 <div class="submit">hey</div>
