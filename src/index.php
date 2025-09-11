@@ -20,6 +20,9 @@ exit();
 <body>
     <img src="./img/croissant.webp" alt="Croissant Image" width="200">
 </body>
+<div class="nav">
+    <nav class="navbar">search...</nav>
+</div>
 
 <div class="submit">This button is for testing!</div>
 <octdec>
