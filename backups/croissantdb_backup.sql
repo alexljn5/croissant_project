@@ -78,14 +78,14 @@ ENGINE = InnoDB;
 -- Table `croissantdb`.`account`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `croissantdb`.`account` (
-  `accountnr` INT NOT NULL AUTO_INCREMENT,
+  `accountnr` INT NOT NULL,
   `aanmaakstijd` TIME NOT NULL,
   `voornaam` VARCHAR(80) NOT NULL,
   `achternaam` VARCHAR(80) NOT NULL,
   `wachtwoord` VARCHAR(80) NOT NULL,
   `telefoonnr` VARCHAR(11) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
-  `geslacht` VARCHAR(10) NOT NULL,
+  `geslacht` CHAR(1) NOT NULL,
   `isDocent` TINYINT NOT NULL,
   `isAdmin` TINYINT NOT NULL,
   `adres` VARCHAR(45) NOT NULL,
