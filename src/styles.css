@@ -12,7 +12,7 @@ body {
   height: 100%;
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom, #e4ebff, #d2dbff);
+  background: linear-gradient(to bottom, hsl(224, 70%, 24%), #000000);
 }
 
 .button-row {
@@ -85,7 +85,23 @@ body {
   align-items: center;
   height: 100vh;
   /* dit zou de volledige viewport pakken */
-  background: linear-gradient(to bottom, #eff9ff, #ceecff, #a3dcff);
+  background: linear-gradient(to bottom, #e4ebff, #e4ebff, #bec2ff);
+}
+
+input {
+  font-family:'system-ui';
+  font-weight:bold;
+  font-size: smaller;
+}
+
+@keyframes input {
+  0% {
+    transform: translateX(0) translateZ(0);
+  }
+
+  100% {
+    transform: translateX(10) translateZ(10);
+  }
 }
 
 .circle {
@@ -98,6 +114,8 @@ body {
   position: absolute;
   z-index: -1;
   pointer-events: none;
+  margin:20%;
+  padding:50%;
   animation: float 6s ease-in-out infinite alternate;
 }
 
@@ -109,8 +127,13 @@ body {
   }
 
   100% {
-    transform: translateY(-20px) translateX(10px);
+    transform: translateY(-2px) translateX(1px);
   }
+}
+
+.logo-border {
+  margin-bottom: 1px;
+  margin-left: 12.5px;
 }
 
 /* center content */
@@ -198,20 +221,18 @@ body {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
+  width: 120%;
   max-width: 1250px;
-  height: 70px;
+  height: 100px;
   margin: 0;
   padding: 5px 10px;
-  opacity: 1;
   backdrop-filter: blur(150px);
   -webkit-backdrop-filter: blur(10px);
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));
-  box-shadow: 0px 0.45px 1.95px 0.65px rgba(255, 255, 255, 1);
+  background: linear-gradient(to bottom, #295098, #000340);  box-shadow: 0px 0.45px 1.95px 0.65px rgba(255, 255, 255, 1);
   align-items: left;
 }
 
-.bodem-tekst,
+.bodem,
 p {
   font-family: sans-serif;
   font-weight: lighter;
