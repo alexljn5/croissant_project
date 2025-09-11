@@ -77,20 +77,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <head>
     <meta charset="UTF-8">
-    <title>Croissant!</title>
-    <link rel="icon" type="image/x-icon" href="./img/croissant.webp">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="icon" type="image/x-icon" href="./img/tickItLogo.png">
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <h1>Croissant! 🥐</h1>
-    <img src="./img/croissant.webp" alt="Croissant Image" width="200">
-
-    <?php if (!empty($message)): ?>
-        <p style="color: blue;"><?php echo $message; ?></p>
-    <?php endif; ?>
-
-    <form class="textbrick" action="index.php" method="post">
+    <h1></h1>
+    <img src="./img/tickItLogo.png" alt="Croissant Image" width="200">
+    <form class="outer-div" action="" method="post">
         Voornaam: <input type="text" name="voornaam" required><br>
         Achternaam: <input type="text" name="achternaam" required><br>
         Wachtwoord: <input type="password" name="wachtwoord" required><br>
@@ -99,20 +95,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <select name="gender" id="gender">
             <option value="man">Man</option>
             <option value="vrouw">Vrouw</option>
-            <option value="garnaal">Garnaal</option>
-        </select><br>
+            <option value="other">Other</option>
+        </select> <br>
 
-        E-mail: <input type="email" name="email" required><br>
-        Telefoonnummer: <input type="tel" name="telefoonnr" required><br>
+        E-mail: <input type="text" name="email" required><br>
+        Telefoonnummer: <input type="text" name="telefoonnr" required><br>
         Adres: <input type="text" name="adres" required><br>
         Postcode: <input type="text" name="postcode" required><br>
-        <input id="verzenden" type="submit" value="Submit">
-    </form>
-
-    <div class="submit">Hey, ready to join the Croissant Crew? 🥐</div>
+        <input id="verzenden" type="submit" value="submit">
 </body>
-<div class="nav">
-    <nav class="navbar">search...</nav>
-</div>
+
+<div class="submit">hey</div>
 
 </html>
