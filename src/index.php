@@ -1,9 +1,7 @@
 <?php
 
 session_start();
-#
-#
-#
+
 exit();
 
 ?>
@@ -24,6 +22,7 @@ exit();
 </body>
 
 <div class="submit">This button is for testing!</div>
+<octdec>
 
-<div class="footer-container">/\/\/\/\/\/\/\</div>
+<div class="footer-container"></div>
 </html>
