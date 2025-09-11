@@ -111,5 +111,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <div class="submit">Hey, ready to join the Croissant Crew? 🥐</div>
 </body>
+<div class="nav">
+    <nav class="navbar">search...</nav>
+</div>
 
 </html>
