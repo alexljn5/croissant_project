@@ -3,9 +3,9 @@
 
  
  # Work delegation
-UI/Web Designer == Rohit
-Database Dev/Mentor == Jordy
-Developer == Casper
+UI/Web Designer == Rohit,
+Database Dev/Mentor == Jordy,
+Developer == Casper,
 Lead Developer/Scrum Master == Alex
 
 
