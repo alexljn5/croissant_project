@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $genderMap = [
         'man' => 'M',
         'vrouw' => 'V',
-        'garnaal' => 'G', // your fun extra 😎
+        'other' => 'O',
     ];
 
     $geslacht = $genderMap[$_POST['gender']] ?? 'U'; // 'U' = unknown fallback
@@ -86,25 +86,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
     <img class="logo-border" src="./img/tickItLogo.png" alt="Tick-IT Logo" width="140">
     <div class="page-wrapper">
-        <h1></h1>
-        <div class="outer-div">
-            <form action="" method="post">
-                Voornaam: <input type="text" name="voornaam" required><br>
-                Achternaam: <input type="text" name="achternaam" required><br>
-                Wachtwoord: <input type="password" name="wachtwoord" required><br>
+    <h1></h1>
+    <div class="outer-div">
+    <form action="" method="post">
+Voornaam: <input type="text" name="voornaam" required><br>
+Achternaam: <input type="text" name="achternaam" required><br>
+Wachtwoord: <input type="password" name="wachtwoord" required><br>
 
-                <label for="gender">Gender:</label>
-                <select name="gender" id="gender">
-                    <option value="man">Man</option>
-                    <option value="vrouw">Vrouw</option>
-                    <option value="other">Other</option>
-                </select> <br>
+<label for="gender">Gender:</label>
+<select name="gender" id="gender">
+  <option value="man">Man</option>
+  <option value="vrouw">Vrouw</option>
+    <option value="other">Other</option>
+</select> <br>
 
-                E-mail: <input type="text" name="email" required><br>
-                Telefoonnummer: <input type="text" name="telefoonnr" required><br>
-                Adres: <input type="text" name="adres" required><br>
-                Postcode: <input type="text" name="postcode" required><br>
-                <input id="verzenden" type="submit" value="submit">
+E-mail: <input type="text" name="email" required><br>
+Telefoonnummer: <input type="text" name="telefoonnr" required><br>
+Adres: <input type="text" name="adres" required><br>
+Postcode: <input type="text" name="postcode" required><br>
+<input id="verzenden" type="submit" value="submit">
 </body>
 </div>
 
