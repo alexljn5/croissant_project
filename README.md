@@ -6,6 +6,6 @@
 UI/Web Designer == Rohit
 Database Dev/Mentor == Jordy
 Developer == Casper
-Lead Developer/Scrum Master == Rohit
+Lead Developer/Scrum Master == Alex
 
 
