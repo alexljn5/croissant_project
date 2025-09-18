@@ -19,7 +19,7 @@ html, body {
   display: flex;
   flex-direction: column;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom, hsl(224, 70%, 24%), #000000);
+  background: linear-gradient(to bottom, #122968, #000000);
 }
 
 .top {
@@ -137,10 +137,10 @@ input {
 .circle {
   width: 100px;
   height: 100px;
-  background-color: rgba(255, 0, 0, 0);
+  background-color: #ff000000;
   border-radius: 50%;
-  border: 4px solid rgba(224, 240, 255, 0.379);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 4px solid #e0f0ff61;
+  box-shadow: 0 4px 8px #0000001a;
   position: absolute;
   z-index: -1;
   pointer-events: none;
@@ -167,9 +167,9 @@ input {
   padding: 25px;
   width: 400px;
   max-width: 90%;
-  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.5), rgba(200, 200, 200, 0.5));
+  background: linear-gradient(to bottom right, #ffffff80, #c8c8c880);
   backdrop-filter: blur(10px);
-  box-shadow: 0px 0.45px 1.95px 0.65px rgba(255, 255, 255, 1);
+  box-shadow: 0px 0.45px 1.95px 0.65px #ffffff;
 }
 
 /* labels */

@@ -8,7 +8,7 @@ $dbname = "croissantdb";
 
 try {
     $pdo = new PDO(
-        "mysql:host=db;dbname=$dbname;charset=utf8",
+        "mysql:host=db;dbname=croissantdb;charset=utf8",
         $username,
         $password
     );
@@ -20,25 +20,25 @@ try {
 $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $voornaam   = trim($_POST['voornaam']);
+    $voornaam = trim($_POST['voornaam']);
     $achternaam = trim($_POST['achternaam']);
     $wachtwoord = password_hash($_POST['wachtwoord'], PASSWORD_DEFAULT);
-
     $genderMap = [
-        'man'   => 'M',
+        'man' => 'M',
         'vrouw' => 'V',
         'other' => 'O',
     ];
-    $geslacht = $genderMap[$_POST['gender']] ?? 'U';
 
-    $email      = trim($_POST['email']);
+    $geslacht = $genderMap[$_POST['gender']] ?? 'U'; // 'U' = unknown fallback
+
+    $email = trim($_POST['email']);
     $telefoonnr = trim($_POST['telefoonnr']);
-    $adres      = trim($_POST['adres']);
-    $postcode   = trim($_POST['postcode']);
+    $adres = trim($_POST['adres']);
+    $postcode = trim($_POST['postcode']);
     $aanmaakstijd = date('H:i:s');
 
     try {
-        // 1. Check for duplicate email
+        // Check for duplicate email
         $checkSql = "SELECT COUNT(*) FROM account WHERE email = :email";
         $checkStmt = $pdo->prepare($checkSql);
         $checkStmt->execute([':email' => $email]);
@@ -46,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($checkStmt->fetchColumn() > 0) {
             $message = "⚠️ Whoops, that email is already taken.";
         } else {
-            // 2. Insert into DB
             $sql = "INSERT INTO account 
                     (aanmaakstijd, voornaam, achternaam, wachtwoord, telefoonnr, email, geslacht, isDocent, isAdmin, adres, postcode) 
                     VALUES 
@@ -55,28 +54,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
                 ':aanmaakstijd' => $aanmaakstijd,
-                ':voornaam'     => $voornaam,
-                ':achternaam'   => $achternaam,
-                ':wachtwoord'   => $wachtwoord,
-                ':telefoonnr'   => $telefoonnr,
-                ':email'        => $email,
-                ':geslacht'     => $geslacht,
-                ':adres'        => $adres,
-                ':postcode'     => $postcode
+                ':voornaam' => $voornaam,
+                ':achternaam' => $achternaam,
+                ':wachtwoord' => $wachtwoord,
+                ':telefoonnr' => $telefoonnr,
+                ':email' => $email,
+                ':geslacht' => $geslacht,
+                ':adres' => $adres,
+                ':postcode' => $postcode
             ]);
 
-            // 3. Create a session-based username (not stored in DB)
-            $accountId = $pdo->lastInsertId();
-            $username = strtolower($voornaam . "." . $achternaam) . $accountId;
-
-            // 4. Save session
-            $_SESSION['username'] = $username;
-            $_SESSION['accountnr'] = $accountId;
-            $_SESSION['email'] = $email;
-
-            // 5. Redirect to home
-            header("Location: home.php");
-            exit();
+            $message = "✅ Success! User added. Accountnr: " . $pdo->lastInsertId();
         }
     } catch (PDOException $e) {
         $message = "❌ Insert failed: " . htmlspecialchars($e->getMessage());
@@ -89,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tick-IT - Sign Up</title>
+  <title>Tick-IT</title>
   <link rel="icon" type="image/x-icon" href="./img/tickItLogo.png">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -101,12 +89,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
   <div class="page-wrapper">
     <div class="outer-div">
-
-      <!-- Show PHP messages if any -->
-      <?php if (!empty($message)): ?>
-        <p style="color:red; text-align:center;"><?= htmlspecialchars($message) ?></p>
-      <?php endif; ?>
-
       <form action="" method="post">
         <label>Voornaam:</label>
         <input class="form-input" type="text" name="voornaam" required>
@@ -136,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <label>Postcode:</label>
         <input class="form-input" type="text" name="postcode" required>
 
-        <input id="verzenden" class="submit" type="submit" value="Sign Up">
+        <input id="verzenden" class="submit" type="submit" value="Submit">
       </form>
     </div>
   </div>
