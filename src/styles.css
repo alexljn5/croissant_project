@@ -30,6 +30,7 @@ html, body {
   padding: 0 20px;
   background: linear-gradient(to bottom, #295098, #000340);
   box-shadow: 0px 0.45px 1.95px 0.65px rgba(255, 255, 255, 1);
+  min-width: 0;
 }
 
 .logo-border {
@@ -37,6 +38,7 @@ html, body {
   height: auto;
   width: auto;
   object-fit: contain;
+  flex-shrink: 0;
 }
 .button-row {
   display: flex;
@@ -261,6 +263,17 @@ p {
   margin: 0;
 }
 
-.header-container {
-  background-color: red;
+
+.header-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-left: 20px;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px #0008;
+  font-family: 'arial', sans-serif;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  flex: 1;
 }
