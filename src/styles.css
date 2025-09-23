@@ -182,7 +182,7 @@ input {
   font-weight: 500;
   opacity: 100%;
   color: #282828;
-  text-align: center;
+
 }
 
 /* paragraaf */
@@ -278,15 +278,39 @@ p {
   height: 100%;
   flex: 1;
 }
+
+.registreren {
+  text-align: center;
+}
 .page-title {
   color: #000;
-  font-size: 1.5rem;
+  font-size: 2.0rem;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-top: 20px;
   letter-spacing: 1px;
   text-shadow: 0 1px 4px #fff8;
   font-family: 'Segoe UI', sans-serif;
-  text-align: center; /* Voeg deze regel toe */
-  display: block;     /* Zorg dat het als blok staat */
-  width: 50%;        /* Laat het de hele breedte innemen */
+  text-align: center;
+  display: block;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.nav-buttons button {
+  margin: 10px 5px;
+  padding: 10px 28px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.nav-buttons button:hover {
+  background: linear-gradient(to top left, #60bbc1, #d0f1f9);
 }
