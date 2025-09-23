@@ -35,9 +35,13 @@ wat als we php verbinden AAN een html file, dan hoef je alleen een html via brow
 ---
 
 /////Alex////
-To access the database: 
+
+To merge the docker containers and databases together: 
 sudo docker exec -i croissant_project-db-1 mysql -u root -ppassword croissantdb < croissantdb.sql
+To access the database: 
 sudo docker exec -it croissant_project-db-1 mysql -u root -ppassword croissantdb
+
+
 //Windows version
 //Merge
 Get-Content croissantdb.sql | docker exec -i croissant_project-db-1 mysql -u root -ppassword croissantdb
