@@ -91,8 +91,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   </div>
 
   <div class="page-wrapper">
-    <div class="outer-div">
-      <form action="" method="post">
+  <div class="outer-div">
+    <h2 class="page-title">Registreren</h2>
+    <form action="" method="post">
         <label>Voornaam:</label>
         <input class="form-input" type="text" name="voornaam" required>
 
