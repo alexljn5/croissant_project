@@ -262,9 +262,12 @@ p {
 }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 .header-container {
   background-color: red;
 =======
+=======
+>>>>>>> Stashed changes
 .header-title {
   color: #fff;
   font-size: 2rem;
@@ -289,5 +292,8 @@ p {
   font-family: 'Segoe UI', sans-serif;
   text-align: center;/* Voeg deze regel toe */
   display: block;     /* Zorg dat het als blok staat */
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 }
