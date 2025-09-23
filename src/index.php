@@ -28,9 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     'vrouw' => 'V',
     'other' => 'O',
   ];
-
   $geslacht = $genderMap[$_POST['gender']] ?? 'U'; // 'U' = unknown fallback
-
   $email = trim($_POST['email']);
   $telefoonnr = trim($_POST['telefoonnr']);
   $adres = trim($_POST['adres']);
@@ -38,21 +36,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $aanmaakstijd = date('H:i:s');
 
   try {
-    // Check for duplicate email
-    $checkSql = "SELECT COUNT(*) FROM account WHERE email = :email";
-    $checkStmt = $pdo->prepare($checkSql);
-    $checkStmt->execute([':email' => $email]);
-
-    if ($checkStmt->fetchColumn() > 0) {
-      $message = "⚠️ Whoops, that email is already taken.";
+    // Check for duplicate email first
+    $checkEmailSql = "SELECT COUNT(*) FROM account WHERE email = :email";
+    $checkEmailStmt = $pdo->prepare($checkEmailSql);
+    $checkEmailStmt->execute([':email' => $email]);
+    if ($checkEmailStmt->fetchColumn() > 0) {
+      $message = "Whoops, that email is already taken.";
     } else {
+      // Generate unique 6-digit accountnr (server-side for safety)
+      do {
+        $accountnr = random_int(100000, 999999); // Secure random, PHP 7+ (falls back to mt_rand if needed)
+        // Check if it already exists
+        $checkIdSql = "SELECT COUNT(*) FROM account WHERE accountnr = :accountnr";
+        $checkIdStmt = $pdo->prepare($checkIdSql);
+        $checkIdStmt->execute([':accountnr' => $accountnr]);
+        $exists = $checkIdStmt->fetchColumn() > 0;
+      } while ($exists); // Loop until unique (very rare to loop more than once)
+
+      // Now insert with accountnr included
       $sql = "INSERT INTO account 
-                    (aanmaakstijd, voornaam, achternaam, wachtwoord, telefoonnr, email, geslacht, isDocent, isAdmin, adres, postcode) 
-                    VALUES 
-                    (:aanmaakstijd, :voornaam, :achternaam, :wachtwoord, :telefoonnr, :email, :geslacht, 0, 0, :adres, :postcode)";
+              (accountnr, aanmaakstijd, voornaam, achternaam, wachtwoord, telefoonnr, email, geslacht, isDocent, isAdmin, adres, postcode) 
+              VALUES 
+              (:accountnr, :aanmaakstijd, :voornaam, :achternaam, :wachtwoord, :telefoonnr, :email, :geslacht, 0, 0, :adres, :postcode)";
 
       $stmt = $pdo->prepare($sql);
       $stmt->execute([
+        ':accountnr' => $accountnr,
         ':aanmaakstijd' => $aanmaakstijd,
         ':voornaam' => $voornaam,
         ':achternaam' => $achternaam,
@@ -64,10 +73,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ':postcode' => $postcode
       ]);
 
-      $message = "✅ Success! User added. Accountnr: " . $pdo->lastInsertId();
+      $message = "Success! User added. Accountnr: " . $accountnr;
     }
   } catch (PDOException $e) {
-    $message = "❌ Insert failed: " . htmlspecialchars($e->getMessage());
+    $message = "Insert failed: " . htmlspecialchars($e->getMessage());
   }
 }
 ?>
@@ -81,17 +90,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <title>Tick-IT</title>
   <link rel="icon" type="image/x-icon" href="./img/tickItLogo.png">
   <link rel="stylesheet" href="styles.css">
-  <script src="javascript/account-id-assigner.js"></script>
+  <!-- Removed <script src="javascript/account-id-assigner.js"></script> since ID is now handled in PHP -->
 </head>
 
 <body>
 
   <div class="top">
     <img class="logo-border" src="./img/tickItLogo.png" alt="Tick-IT Logo">
+    <div class="header-container">
+      <h1 class="header-title">Tick-IT</h1>
+    </div>
   </div>
 
   <div class="page-wrapper">
     <div class="outer-div">
+      <h2 class="page-title">Registreren</h2>
+      <?php if ($message): ?>
+        <p><?php echo $message; ?></p>
+      <?php endif; ?>
       <form action="" method="post">
         <label>Voornaam:</label>
         <input class="form-input" type="text" name="voornaam" required>
