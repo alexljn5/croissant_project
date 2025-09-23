@@ -90,11 +90,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
   </div>
 
-  <div class="registreren">
-    <h1 class="page-title">Registreren</h1>
-  </div>
   <div class="page-wrapper">
   <div class="outer-div">
+          <div class="registreren">
+          <h1 class="page-title">Registeren</h1>
+          </div>
     <form action="" method="post">
         <label>Voornaam:</label>
         <input class="form-input" type="text" name="voornaam" required>
@@ -126,6 +126,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <input id="verzenden" class="submit" type="submit" value="Submit">
       </form>
+        <div class="nav-buttons">
+          <a href="index.php"><button type="button">Login</button></a>
+          <a href="register.php"><button type="button">Registreren</button></a>
+        </div>
     </div>
   </div>
 

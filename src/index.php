@@ -90,49 +90,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
   </div>
 
-  <div class="registreren">
-    <h1 class="page-title">Login</h1>
-  </div>
+
   <div class="page-wrapper">
   <div class="outer-div">
+      <div class="registreren">
+        <h1 class="page-title">Login</h1>
+      </div>
     <form action="" method="post">
-        <label>Voornaam:</label>
-        <input class="form-input" type="text" name="voornaam" required>
-
-        <label>Achternaam:</label>
-        <input class="form-input" type="text" name="achternaam" required>
-
-        <label>Wachtwoord:</label>
-        <input class="form-input" type="password" name="wachtwoord" required>
-
-        <label for="gender">Gender:</label>
-        <select class="form-input" name="gender" id="gender">
-          <option value="man">Man</option>
-          <option value="vrouw">Vrouw</option>
-          <option value="other">Other</option>
-        </select>
 
         <label>E-mail:</label>
         <input class="form-input" type="email" name="email" required>
 
-        <label>Telefoonnummer:</label>
-        <input class="form-input" type="text" name="telefoonnr" required>
-
-        <label>Adres:</label>
-        <input class="form-input" type="text" name="adres" required>
-
-        <label>Postcode:</label>
-        <input class="form-input" type="text" name="postcode" required>
+        <label>Wachtwoord:</label>
+        <input class="form-input" type="password" name="wachtwoord" required>
 
         <input id="verzenden" class="submit" type="submit" value="Submit">
       </form>
+        <div class="nav-buttons">
+          <a href="index.php"><button type="button">Login</button></a>
+          <a href="register.php"><button type="button">Registreren</button></a>
+        </div>
     </div>
   </div> <!-- einde .page-wrapper -->
 
-  <div class="nav-buttons">
-    <a href="index.php"><button type="button">Login</button></a>
-    <a href="register.php"><button type="button">Registreren</button></a>
-  </div>
+
 
   <div class="bodem">
     <p>© Tick-IT 2025</p>
