@@ -91,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   </div>
 
   <div class="registreren">
-    <h1 class="page-title">Login</h1>
+    <h1 class="page-title">Registreren</h1>
   </div>
   <div class="page-wrapper">
   <div class="outer-div">
@@ -127,11 +127,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <input id="verzenden" class="submit" type="submit" value="Submit">
       </form>
     </div>
-  </div> <!-- einde .page-wrapper -->
-
-  <div class="nav-buttons">
-    <a href="index.php"><button type="button">Login</button></a>
-    <a href="register.php"><button type="button">Registreren</button></a>
   </div>
 
   <div class="bodem">
