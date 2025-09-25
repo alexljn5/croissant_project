@@ -41,6 +41,8 @@ sudo docker exec -i croissant_project-db-1 mysql -u root -ppassword croissantdb 
 To access the database: 
 sudo docker exec -it croissant_project-db-1 mysql -u root -ppassword croissantdb
 
+//For Jordy
+docker exec -i fullstack-site1-mysql-1 mariadb -u root -ppassword forevertools < db.sql
 
 //Windows version
 //Merge
