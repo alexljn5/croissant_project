@@ -19,7 +19,7 @@ html, body {
   display: flex;
   flex-direction: column;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom, hsl(224, 70%, 24%), #000000);
+  background: radial-gradient(hsl(224, 70%, 24%), #000000);
 }
 
 .top {
@@ -59,13 +59,14 @@ html, body {
   color: #fff;
   border: none;
   border-radius: 6px;
-  background: linear-gradient(to bottom, #606060, #909090, #909090, #909090, #909090);
+  background: linear-gradient(to top, #606060, #606060, #606060, #606060, #606060, #909090, #ffffff);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .submit:hover {
-  background: linear-gradient(to top left, #60bbc1, #d0f1f9);
+  background: radial-gradient(#60bbc1, #d0f1f9);
+  box-shadow: 0.45px 0.45px 8px 0.65px rgba(255, 255, 255, 0.7);
   transform: translateY(-2px);
 }
 
@@ -105,7 +106,7 @@ html, body {
   align-items: center;
   padding: 20px; 
   box-sizing: border-box;
-  background: linear-gradient(to bottom, #e4ebff, #e4ebff, #bec2ff);
+  background-image: radial-gradient(#e4ebff, #e4ebff, #bec2ff);
 }
 
 .form-input {

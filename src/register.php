@@ -46,13 +46,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($checkStmt->fetchColumn() > 0) {
       $message = "⚠️ Whoops, that email is already taken.";
     } else {
+      // Generate a random 6-digit account number
+      do {
+          $accountnr = mt_rand(100000, 999999);
+          $checkAccount = $pdo->prepare("SELECT COUNT(*) FROM account WHERE accountnr = ?");
+          $checkAccount->execute([$accountnr]);
+      } while ($checkAccount->fetchColumn() > 0);
+
       $sql = "INSERT INTO account 
-                    (aanmaakstijd, voornaam, achternaam, wachtwoord, telefoonnr, email, geslacht, isDocent, isAdmin, adres, postcode) 
+                    (accountnr, aanmaakstijd, voornaam, achternaam, wachtwoord, telefoonnr, email, geslacht, isDocent, isAdmin, adres, postcode) 
                     VALUES 
-                    (:aanmaakstijd, :voornaam, :achternaam, :wachtwoord, :telefoonnr, :email, :geslacht, 0, 0, :adres, :postcode)";
+                    (:accountnr, :aanmaakstijd, :voornaam, :achternaam, :wachtwoord, :telefoonnr, :email, :geslacht, 0, 0, :adres, :postcode)";
 
       $stmt = $pdo->prepare($sql);
       $stmt->execute([
+        ':accountnr' => $accountnr,
         ':aanmaakstijd' => $aanmaakstijd,
         ':voornaam' => $voornaam,
         ':achternaam' => $achternaam,
@@ -64,7 +72,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ':postcode' => $postcode
       ]);
 
-      $message = "✅ Success! User added. Accountnr: " . $pdo->lastInsertId();
+      // Since accountnr is manually generated (not AUTO_INCREMENT), lastInsertId() returns 0.
+      // Show the actual generated account number to the user instead.
+      $message = "✅ Success! User added. Accountnr: " . $accountnr;
     }
   } catch (PDOException $e) {
     $message = "❌ Insert failed: " . htmlspecialchars($e->getMessage());
@@ -114,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           <?php echo htmlspecialchars($message); ?>
         </p>
       <?php endif; ?>
-      <form action="" method="post">
+  <form id="register-form" action="" method="post">
         <label>Voornaam:</label>
         <input class="form-input" type="text" name="voornaam"
           value="<?php echo isset($_POST['voornaam']) ? htmlspecialchars($_POST['voornaam']) : ''; ?>" required>
@@ -162,6 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <div class="bodem">
     <p>© Tick-IT 2025</p>
   </div>
+    <script src="javascript/account-id-assigner.js"></script>
 </body>
 
 </html>
