@@ -1,74 +1,30 @@
 <?php
 session_start();
 
-$servername = "localhost";
-$username = "root";
-$password = "password"; // change if needed
-$dbname = "croissantdb";
-
-try {
-    $pdo = new PDO(
-        "mysql:host=db;dbname=croissantdb;charset=utf8",
-        $username,
-        $password
-    );
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("<p style='color:red;'>Database connection failed: " . htmlspecialchars($e->getMessage()) . "</p>");
-}
+require_once 'database.php';
 
 $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $voornaam = trim($_POST['voornaam']);
-    $achternaam = trim($_POST['achternaam']);
-    $wachtwoord = password_hash($_POST['wachtwoord'], PASSWORD_DEFAULT);
-    $genderMap = [
-        'man' => 'M',
-        'vrouw' => 'V',
-        'other' => 'O',
-    ];
+  $email = trim($_POST['email']);
+  $wachtwoord = $_POST['wachtwoord'];
 
-    $geslacht = $genderMap[$_POST['gender']] ?? 'U'; // 'U' = unknown fallback
+  try {
+    $sql = "SELECT accountnr, wachtwoord, voornaam FROM account WHERE email = :email";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':email' => $email]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $email = trim($_POST['email']);
-    $telefoonnr = trim($_POST['telefoonnr']);
-    $adres = trim($_POST['adres']);
-    $postcode = trim($_POST['postcode']);
-    $aanmaakstijd = date('H:i:s');
-
-    try {
-        // Check for duplicate email
-        $checkSql = "SELECT COUNT(*) FROM account WHERE email = :email";
-        $checkStmt = $pdo->prepare($checkSql);
-        $checkStmt->execute([':email' => $email]);
-
-        if ($checkStmt->fetchColumn() > 0) {
-            $message = "⚠️ Whoops, that email is already taken.";
-        } else {
-            $sql = "INSERT INTO account 
-                    (aanmaakstijd, voornaam, achternaam, wachtwoord, telefoonnr, email, geslacht, isDocent, isAdmin, adres, postcode) 
-                    VALUES 
-                    (:aanmaakstijd, :voornaam, :achternaam, :wachtwoord, :telefoonnr, :email, :geslacht, 0, 0, :adres, :postcode)";
-
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([
-                ':aanmaakstijd' => $aanmaakstijd,
-                ':voornaam' => $voornaam,
-                ':achternaam' => $achternaam,
-                ':wachtwoord' => $wachtwoord,
-                ':telefoonnr' => $telefoonnr,
-                ':email' => $email,
-                ':geslacht' => $geslacht,
-                ':adres' => $adres,
-                ':postcode' => $postcode
-            ]);
-
-            $message = "✅ Success! User added. Accountnr: " . $pdo->lastInsertId();
-        }
-    } catch (PDOException $e) {
-        $message = "❌ Insert failed: " . htmlspecialchars($e->getMessage());
+    if ($user && password_verify($wachtwoord, $user['wachtwoord'])) {
+      $_SESSION['accountnr'] = $user['accountnr'];
+      $_SESSION['voornaam'] = $user['voornaam'];
+      $message = "✅ Welkom, " . htmlspecialchars($user['voornaam']) . "!";
+    } else {
+      $message = "❌ Ongeldige e-mail of wachtwoord.";
     }
+  } catch (PDOException $e) {
+    $message = "❌ Login mislukt: " . htmlspecialchars($e->getMessage());
+  }
 }
 ?>
 

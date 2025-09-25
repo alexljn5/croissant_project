@@ -1,21 +1,7 @@
 <?php
 session_start();
 
-$servername = "localhost";
-$username = "root";
-$password = "password"; // change if needed
-$dbname = "croissantdb";
-
-try {
-    $pdo = new PDO(
-        "mysql:host=db;dbname=croissantdb;charset=utf8",
-        $username,
-        $password
-    );
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("<p style='color:red;'>Database connection failed: " . htmlspecialchars($e->getMessage()) . "</p>");
-}
+require_once 'database.php';
 
 $message = "";
 
@@ -95,6 +81,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           <div class="registreren">
           <h1 class="page-title">Registeren</h1>
           </div>
+          <?php if ($message): ?>
+          <p><?= htmlspecialchars($message) ?></p>
+          <?php endif; ?>
     <form action="" method="post">
         <label>Voornaam:</label>
         <input class="form-input" type="text" name="voornaam" required>
