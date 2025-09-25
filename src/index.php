@@ -10,13 +10,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $wachtwoord = $_POST['wachtwoord'];
 
   try {
-    // Check for duplicate email
-    $checkSql = "SELECT COUNT(*) FROM account WHERE email = :email";
-    $checkStmt = $pdo->prepare($checkSql);
-    $checkStmt->execute([':email' => $email]);
+    $sql = "SELECT accountnr, wachtwoord, voornaam FROM account WHERE email = :email";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':email' => $email]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($checkStmt->fetchColumn() > 0) {
-      $message = "⚠️ Whoops, that email is already taken.";
+    if ($user && password_verify($wachtwoord, $user['wachtwoord'])) {
+      $_SESSION['accountnr'] = $user['accountnr'];
+      $_SESSION['voornaam'] = $user['voornaam'];
+      header("Location: dashboard.php");
+      exit;
     } else {
       $message = "❌ Ongeldige e-mail of wachtwoord.";
     }
