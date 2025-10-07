@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,29 +21,21 @@
 
         <label>Achternaam:</label>
         <input class="form-input" type="text" name="achternaam" required>
+      <form method="post">
+        <h3 class="page-title">REGISTREREN:</h3>
+        
+        <label>Telefoonnummer of E-mail</label>
+        <input class="form-input" type="email" type="text" name="telefoonnr" required>
 
         <label>Wachtwoord:</label>
         <input class="form-input" type="password" name="wachtwoord" required>
 
-        <label for="gender">Gender:</label>
-        <select class="form-input" name="gender" id="gender">
-          <option value="man">Man</option>
-          <option value="vrouw">Vrouw</option>
-          <option value="other">Other</option>
-        </select>
 
-        <label>E-mail:</label>
-        <input class="form-input" type="email" name="email" required>
-
-        <label>Telefoonnummer:</label>
-        <input class="form-input" type="text" name="telefoonnr" required>
-
-        <label>Adres:</label>
-        <input class="form-input" type="text" name="adres" required>
-
-        <label>Postcode:</label>
-        <input class="form-input" type="text" name="postcode" required>
-
+        <br>
+        <br>
+        <br>
+        <br>
+        <button id="verzenden" class="submit" type="submit">Submit</button>
         <button id="verzenden" class="submit" type="submit">Submit</button>
       </form>
     </div>

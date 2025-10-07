@@ -51,43 +51,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     VALUES 
                     (:aanmaakstijd, :voornaam, :achternaam, :wachtwoord, :telefoonnr, :email, :geslacht, 0, 0, :adres, :postcode)";
 
-      $stmt = $pdo->prepare($sql);
-      $stmt->execute([
-        ':aanmaakstijd' => $aanmaakstijd,
-        ':voornaam' => $voornaam,
-        ':achternaam' => $achternaam,
-        ':wachtwoord' => $wachtwoord,
-        ':telefoonnr' => $telefoonnr,
-        ':email' => $email,
-        ':geslacht' => $geslacht,
-        ':adres' => $adres,
-        ':postcode' => $postcode
-      ]);
-
-      $message = "✅ Success! User added. Accountnr: " . $pdo->lastInsertId();
-    }
-  } catch (PDOException $e) {
-    $message = "❌ Insert failed: " . htmlspecialchars($e->getMessage());
-  }
-}
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tick-IT</title>
-  <link rel="icon" type="image/x-icon" href="./img/tickItLogo.png">
-  <link rel="stylesheet" href="styles.css">
   <script src="javascript/account-id-assigner.js"></script>
 </head>
 
 <body>
 
   <div class="top">
-    <img class="logo-border" src="./img/tickItLogo.png" alt="Tick-IT Logo">
+    <div class="logo-border">
+      <img src="./img/tickItLogo.png" alt="Tick-IT Logo">
+    </div>
+    <div class="header-container">
+      <h1 class="header-title">Tick-IT</h1>
+    </div>
+  </div>
+
+  <div class="page-wrapper">
+    <div class="outer-div">
+
+      <!-- Show PHP messages if any -->
+      <?php if (!empty($message)): ?>
+        <p style="color:red; text-align:center;"><?= htmlspecialchars($message) ?></p>
+      <?php endif; ?>
+
+      <form action="" method="post">
+        <label>Voornaam:</label>
+        <input class="form-input" type="text" name="voornaam" required>
+
+        <label>Achternaam:</label>
+        <input class="form-input" type="text" name="achternaam" required>
+=======
     <div class="header-container">
       <h1 class="header-title">Tick-IT</h1>
     </div>
@@ -107,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <label>Wachtwoord:</label>
         <input class="form-input" type="password" name="wachtwoord" required>
 
-        <input id="verzenden" class="submit" type="submit" value="Submit">
+        <input id="verzenden" class="submit" type="submit" value="Sign Up">
       </form>
         <div class="nav-buttons">
           <a href="index.php"><button type="button">Login</button></a>

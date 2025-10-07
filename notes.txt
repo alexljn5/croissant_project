@@ -50,3 +50,15 @@ Get-Content croissantdb.sql | docker exec -i croissant_project-db-1 mysql -u roo
 //Login
 Start-Process powershell -Verb RunAs -ArgumentList '-Command', 'docker exec -it croissant_project-db-1 mysql -u root -ppassword croissantdb'
 /////Alex////
+
+
+-- jordy
+
+eerst een ticket kunnen maken
+als je een ticket maakt moet het bij een bepaalde vak
+ieder vak is verdeeld met opdrachten
+als je een ticket maakt dan kun je erin zien welke opdracht je moet maken en wanneer de verloopdatum is
+de aanmaaksdatum is ook zichtbaar zodat je weet vanaf en ongeveer tot wanneer je de opdracht nog kunt maken
+
+ghgfgn
+---
