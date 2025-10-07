@@ -19,12 +19,8 @@ html, body {
   display: flex;
   flex-direction: column;
   font-family: 'Segoe UI', sans-serif;
-<<<<<<< Updated upstream
-  background: linear-gradient(to bottom, #122968, #000000);
-=======
   background-color: #122968;
   box-shadow: 0px 5px 10px 1.5px rgba(43, 43, 43, 0.1);
->>>>>>> Stashed changes
 }
 
 .top {
@@ -33,17 +29,6 @@ html, body {
   display: flex;
   align-items: center;
   padding: 0 20px;
-<<<<<<< Updated upstream
-  background: linear-gradient(to bottom, #295098, #000340);
-  box-shadow: 0px 0.45px 1.95px 0.65px rgba(255, 255, 255, 1);
-}
-
-.logo-border {
-  max-height: 50px;
-  height: auto;
-  width: auto;
-  object-fit: contain;
-=======
   background-color:#122968;
   box-shadow: 0px 5px 10px 1.5px rgba(43, 43, 43, 0.1);
   min-width: 0;
@@ -60,7 +45,6 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
->>>>>>> Stashed changes
 }
 
 .logo-border img {
@@ -87,13 +71,7 @@ html, body {
   font-size: 1rem;
   font-weight: bold;
   color: #fff;
-<<<<<<< Updated upstream
-  border: none;
-  border-radius: 6px;
-  background: linear-gradient(to bottom, #606060, #909090, #909090, #909090, #909090);
-=======
   background-color:#1b4da8;
->>>>>>> Stashed changes
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0px 5px 10px 1.5px rgba(43, 43, 43, 0.1);
@@ -102,12 +80,8 @@ html, body {
 }
 
 .submit:hover {
-<<<<<<< Updated upstream
-  background: linear-gradient(to top left, #60bbc1, #d0f1f9);
-=======
   background-color:#2d64cb;
   box-shadow: 0px 5px 15px 0.5px rgba(0, 0, 0, 0.1);
->>>>>>> Stashed changes
   transform: translateY(-2px);
 }
 
@@ -147,13 +121,8 @@ html, body {
   margin-top: 20px;
   align-items: center;
   padding: 20px; 
-<<<<<<< Updated upstream
-  box-sizing: border-box;
-  background: linear-gradient(to bottom, #e4ebff, #e4ebff, #bec2ff);
-=======
   /*box-sizing: border-box;*/
   background-color: #dfe2ec;
->>>>>>> Stashed changes
 }
 
 .form-input {
@@ -190,11 +159,6 @@ input {
   width: 100px;
   height: 100px;
   background-color: #ff000000;
-<<<<<<< Updated upstream
-  border-radius: 50%;
-  border: 4px solid #e0f0ff61;
-=======
->>>>>>> Stashed changes
   box-shadow: 0 4px 8px #0000001a;
   position: absolute;
   z-index: -1;
@@ -221,14 +185,8 @@ input {
   padding: 25px;
   width: 400px;
   max-width: 90%;
-<<<<<<< Updated upstream
-  background: linear-gradient(to bottom right, #ffffff80, #c8c8c880);
-  backdrop-filter: blur(10px);
-  box-shadow: 0px 0.45px 1.95px 0.65px #ffffff;
-=======
   background-color: #ffffff;
   box-shadow: 0px 5px 10px 1.5px rgba(43, 43, 43, 0.1);
->>>>>>> Stashed changes
 }
 
 /* labels */
@@ -319,13 +277,10 @@ p {
   margin: 0;
 }
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 .header-container {
   background-color: red;
-=======
-=======
->>>>>>> Stashed changes
+}
+
 .header-title {
   color: #fff;
   font-size: 2rem;
@@ -348,14 +303,8 @@ p {
   letter-spacing: 1px;
   text-shadow: 0 1px 4px #fff8;
   font-family: 'Segoe UI', sans-serif;
-<<<<<<< Updated upstream
-  text-align: center;/* Voeg deze regel toe */
-  display: block;     /* Zorg dat het als blok staat */
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
+  text-align: center;
+  display: block;   
   text-align: center;
   display: block;
 }
@@ -383,5 +332,4 @@ p {
 
 .nav-buttons button:hover {
   background-color:#2d64cb;
->>>>>>> Stashed changes
 }
