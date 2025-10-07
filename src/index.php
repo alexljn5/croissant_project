@@ -92,8 +92,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <title>Tick-IT - Sign Up</title>
   <link rel="icon" type="image/x-icon" href="./img/tickItLogo.png">
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   <link rel="stylesheet" href="styles.css">
 =======
+=======
+>>>>>>> Stashed changes
   <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
   <script src="javascript/account-id-assigner.js"></script>
 >>>>>>> Stashed changes
@@ -102,8 +105,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
   <div class="top">
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <img class="logo-border" src="./img/tickItLogo.png" alt="Tick-IT Logo">
 =======
+=======
+>>>>>>> Stashed changes
     <div class="logo-border">
       <img src="./img/tickItLogo.png" alt="Tick-IT Logo">
     </div>
