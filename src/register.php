@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tick-IT</title>
   <link rel="icon" type="image/x-icon" href="./img/tickItLogo.png">
-  <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
+  <link rel="stylesheet" href="styles.css">
   <style>
     .message {
       color: green;
@@ -108,9 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <body>
   <div class="top">
-    <div class="logo-border">
-      <img src="./img/tickItLogo.png" alt="Tick-IT Logo">
-    </div>
+    <img class="logo-border" src="./img/tickItLogo.png" alt="Tick-IT Logo">
     <div class="header-container">
       <h1 class="header-title">Tick-IT</h1>
     </div>

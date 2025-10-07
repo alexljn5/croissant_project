@@ -1,14 +1,14 @@
-#efefef
-#e4ebff
-#bec2ff
-#e1e1e1
-#1b4da8
-#295098
-#122968
-#000340
-#323232
-#282828
-#ffffff80
+#efefef - wit
+#e4ebff - wit bl
+#bec2ff - wit bl 2
+#e1e1e1 - wit gr
+#1b4da8 - drk bl
+#295098 - drk 2 bl
+#122968 - drk 3 bl
+#000340 - drk 4 bl 
+#323232 - gr zw
+#282828 - gr zw 1
+#ffffff80 - drk 5 bl
 #c8c8c880
 #606060
 #909090

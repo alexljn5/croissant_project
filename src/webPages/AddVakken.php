@@ -58,11 +58,8 @@ try {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add Vakken</title>
-<<<<<<< Updated upstream
-  <link rel="stylesheet" href="src/styles.css">
-=======
   <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
->>>>>>> Stashed changes
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -102,7 +99,7 @@ if ($rows) {
 </form>
 
 <hr>
-<a href="../index.php" class="button">Terug naar index</a>
+<a href="index.php" class="button">Terug naar index</a>
 
 </body>
 </html>
