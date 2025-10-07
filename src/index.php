@@ -91,12 +91,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tick-IT - Sign Up</title>
   <link rel="icon" type="image/x-icon" href="./img/tickItLogo.png">
+<<<<<<< Updated upstream
   <link rel="stylesheet" href="styles.css">
+=======
+  <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
+  <script src="javascript/account-id-assigner.js"></script>
+>>>>>>> Stashed changes
 </head>
 <body>
 
   <div class="top">
+<<<<<<< Updated upstream
     <img class="logo-border" src="./img/tickItLogo.png" alt="Tick-IT Logo">
+=======
+    <div class="logo-border">
+      <img src="./img/tickItLogo.png" alt="Tick-IT Logo">
+    </div>
+    <div class="header-container">
+      <h1 class="header-title">Tick-IT</h1>
+    </div>
+>>>>>>> Stashed changes
   </div>
 
   <div class="page-wrapper">
