@@ -30,13 +30,30 @@ $message = "";
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nieuwe Pagina</title>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
   <link rel="stylesheet" href="src/styles.css">
+=======
+  <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
+>>>>>>> Stashed changes
+=======
+  <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
+>>>>>>> Stashed changes
 =======
   <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
 >>>>>>> Stashed changes
 </head>
 
+
 <body>
+  <div class="top">
+    <div class="logo-border">
+      <img src="./img/tickItLogo.png" alt="Tick-IT Logo">
+    </div>
+    <div class="header-container">
+      <h1 class="header-title">Tick-IT</h1>
+    </div>
+  </div>
   <div class="top">
     <div class="logo-border">
       <img src="./img/tickItLogo.png" alt="Tick-IT Logo">
