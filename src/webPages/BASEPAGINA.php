@@ -22,7 +22,6 @@ try {
 
 $message = "";
 ?>
-
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -42,11 +41,7 @@ $message = "";
       <h1 class="header-title">Tick-IT</h1>
     </div>
   </div>
-  <div class="top">
-    <div class="logo-border">
-      <img src="./img/tickItLogo.png" alt="Tick-IT Logo">
-    </div>
-    <div class="header-container">
-      <h1 class="header-title">Tick-IT</h1>
-    </div>
-  </div>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+

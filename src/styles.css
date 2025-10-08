@@ -21,6 +21,7 @@ html, body {
   font-family: 'Segoe UI', sans-serif;
   background-color: #122968;
   box-shadow: 0px 5px 10px 1.5px rgba(43, 43, 43, 0.1);
+  background: radial-gradient(hsl(224, 70%, 24%), #000000);
 }
 
 .top {
@@ -32,6 +33,7 @@ html, body {
   background-color:#122968;
   box-shadow: 0px 5px 10px 1.5px rgba(43, 43, 43, 0.1);
   min-width: 0;
+  flex-shrink: 0;
 }
 
 .logo-border {
@@ -72,6 +74,7 @@ html, body {
   font-weight: bold;
   color: #fff;
   background-color:#1b4da8;
+  background: linear-gradient(to top, #606060, #606060, #606060, #606060, #606060, #909090, #ffffff);
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0px 5px 10px 1.5px rgba(43, 43, 43, 0.1);
@@ -82,6 +85,8 @@ html, body {
 .submit:hover {
   background-color:#2d64cb;
   box-shadow: 0px 5px 15px 0.5px rgba(0, 0, 0, 0.1);
+  background: radial-gradient(#60bbc1, #d0f1f9);
+  box-shadow: 0.45px 0.45px 8px 0.65px rgba(255, 255, 255, 0.7);
   transform: translateY(-2px);
 }
 
@@ -123,6 +128,7 @@ html, body {
   padding: 20px; 
   /*box-sizing: border-box;*/
   background-color: #dfe2ec;
+  background-image: radial-gradient(#e4ebff, #e4ebff, #bec2ff);
 }
 
 .form-input {
@@ -197,6 +203,7 @@ input {
   font-weight: 500;
   opacity: 100%;
   color: #282828;
+
 }
 
 /* paragraaf */
@@ -277,14 +284,6 @@ p {
   margin: 0;
 }
 
-.header-container {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-}
-
 .header-title {
   color: #fff;
   font-size: 2rem;
@@ -307,15 +306,25 @@ p {
   letter-spacing: 1px;
   text-shadow: 0 1px 4px #fff8;
   font-family: 'Segoe UI', sans-serif;
+  text-align: center;/* Voeg deze regel toe */
+  display: block;     /* Zorg dat het als blok staat */
+.registreren {
   text-align: center;
-  display: block;   
+}
+.page-title {
+  color: #000;
+  font-size: 2.0rem;
+  font-weight: bold;
+  margin-top: 20px;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 4px #fff8;
+  font-family: 'Segoe UI', sans-serif;
   text-align: center;
   display: block;
 }
 
 .nav-buttons {
   display: flex;
-  border: none;
   justify-content: center;
 }
 
@@ -336,4 +345,17 @@ p {
 
 .nav-buttons button:hover {
   background-color:#2d64cb;
+  margin: 10px 5px;
+  padding: 10px 28px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.nav-buttons button:hover {
+  background: linear-gradient(to top left, #60bbc1, #d0f1f9);
 }

@@ -59,6 +59,7 @@ try {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add Vakken</title>
   <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -98,7 +99,7 @@ if ($rows) {
 </form>
 
 <hr>
-<a href="../index.php" class="button">Terug naar index</a>
+<a href="index.php" class="button">Terug naar index</a>
 
 </body>
 </html>
