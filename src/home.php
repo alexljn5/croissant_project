@@ -12,7 +12,7 @@ if (!isset($_SESSION['accountnr'])) {
 <head>
   <meta charset="UTF-8">
   <title>Home - Tick-IT</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
 </head>
 <body>
   <div class="top">

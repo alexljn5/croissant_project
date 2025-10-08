@@ -31,6 +31,7 @@ $message = "";
   <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
 </head>
 
+
 <body>
   <div class="top">
     <div class="logo-border">
