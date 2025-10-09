@@ -22,7 +22,7 @@ $action = $_POST["action"] ?? "";
 $klasFilter = $_POST["klas"] ?? null;
 
 // Haal alle klassen op
-$sql = "SELECT klasnr, klastype FROM croissantdb.klas ORDER BY klastype";
+$sql = "SELECT DISTINCT klas FROM account";
 $result = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
 $message = "";
@@ -32,7 +32,7 @@ $message = "";
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Studenten per Klas</title>
+  <title>Nieuwe Pagina</title>
   <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
 </head>
 <body>
@@ -47,13 +47,12 @@ $message = "";
 
 <form method="POST" action="">
     <input type="hidden" name="action" value="filterStudenten">
-    <label for="klas">Filter op klas:</label>
-    <select name="klas" id="klas">
+    <label for="student">Filter op klas:</label>
+    <select name="klas" id="student">
         <option value="">-- Kies klas --</option>
         <?php foreach($result as $row): ?>
-            <option value="<?= htmlspecialchars($row['klasnr']) ?>" 
-                    <?= ($klasFilter == $row['klasnr']) ? 'selected' : '' ?>>
-                <?= htmlspecialchars($row['klastype']) ?>
+            <option value="<?= $row['Id'] ?>" <?= ($klasFilter == $row['Id']) ? 'selected' : '' ?>>
+                <?= htmlspecialchars($row['klas']) ?>
             </option>
         <?php endforeach; ?>
     </select>
@@ -62,15 +61,11 @@ $message = "";
 
 <?php
 // Haal studenten op
-$StudentList = "SELECT a.voornaam, a.achternaam, a.email, k.klastype 
-                FROM croissantdb.account a 
-                JOIN croissantdb.account_has_klas ahk ON a.accountnr = ahk.account_accountnr 
-                JOIN croissantdb.klas k ON ahk.klas_klasnr = k.klasnr 
-                WHERE a.isDocent = 0";
+$StudentList = "SELECT voornaam FROM account where isDocent = false";
 $params = [];
 
 if ($action === "filterStudenten" && $klasFilter) {
-    $StudentList .= " AND k.klasnr = :klas";
+    $StudentList .= " WHERE klas = :klas";
     $params[':klas'] = $klasFilter;
 }
 
@@ -81,10 +76,8 @@ $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
 if ($students) {
     echo "<ul>";
     foreach ($students as $row) {
-        $naam = htmlspecialchars($row["voornaam"] . " " . $row["achternaam"]);
-        $email = htmlspecialchars($row["email"]);
-        $klas = htmlspecialchars($row["klastype"]);
-        echo "<li style='margin-bottom:10px;'>Naam student: $naam ($email) - Klas: $klas</li>";
+        $naam = htmlspecialchars($row["voornaam"]);
+        echo "<li style='margin-bottom:10px;'>Naam student: $naam</li>";
     }
     echo "</ul>";
 } else {
