@@ -85,15 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 
 <body>
-
-  <div class="top">
-    <img class="logo-border" src="./img/tickItLogo.png" alt="Tick-IT Logo">
-    <div class="header-container">
-      <h1 class="header-title">Tick-IT</h1>
-    </div>
-  </div>
-
-
+  <?php include 'addons/header.php'; ?>
   <div class="page-wrapper">
   <div class="outer-div">
       <div class="registreren">
@@ -115,13 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
     </div>
   </div> <!-- einde .page-wrapper -->
-
-
-
-  <div class="bodem">
-    <p>© Tick-IT 2025</p>
-  </div>
-
+  <?php include 'addons/footer.php'; ?>
 </body>
 
 </html>
