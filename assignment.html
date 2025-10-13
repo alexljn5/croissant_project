@@ -16,41 +16,79 @@
             /* Dark black for evil theme */
             color: #ff0000;
             /* Blood red text */
+            transition: all 0.3s ease;
+            /* Smooth theme switch */
+        }
+
+        body.high-contrast {
+            background-color: #ffffff;
+            /* White background for high contrast */
+            color: #000000;
+            /* Black text for readability */
+            font-family: Arial, sans-serif;
+            /* Simpler font */
         }
 
         .container {
             max-width: 800px;
             margin: 0 auto;
             background-color: #2b2b2b;
-            /* Darker gray-black for contrast */
+            /* Darker gray-black */
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(255, 0, 0, 0.3);
             /* Red-tinted shadow */
             border: 2px solid #ff0000;
-            /* Red border for menace */
+            /* Red border */
+            transition: all 0.3s ease;
+        }
+
+        body.high-contrast .container {
+            background-color: #f5f5f5;
+            /* Light gray for contrast */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            /* Neutral shadow */
+            border: 2px solid #000000;
+            /* Black border */
         }
 
         h1 {
             color: #ff3333;
-            /* Brighter red for title */
+            /* Brighter red */
             text-align: center;
             font-size: 2.5em;
             text-transform: uppercase;
-            /* Bold and commanding */
+            transition: color 0.3s ease;
+        }
+
+        body.high-contrast h1 {
+            color: #000000;
+            /* Black for high contrast */
         }
 
         h2 {
             color: #ff6666;
-            /* Lighter red for headings */
+            /* Lighter red */
             border-bottom: 2px solid #ff0000;
             padding-bottom: 5px;
             margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        body.high-contrast h2 {
+            color: #000080;
+            /* Dark blue for contrast */
+            border-bottom: 2px solid #000080;
         }
 
         h3 {
             color: #ff9999;
-            /* Softer red for subheadings */
+            /* Softer red */
+            transition: color 0.3s ease;
+        }
+
+        body.high-contrast h3 {
+            color: #000080;
         }
 
         p,
@@ -59,13 +97,25 @@
             margin: 10px 0;
         }
 
+        body.high-contrast p,
+        body.high-contrast li {
+            color: #000000;
+            /* Black text */
+        }
+
         ul {
             list-style-type: none;
-            /* No bullets for a sleek, evil look */
+            /* Sleek, evil look */
             margin-left: 20px;
             padding-left: 10px;
             border-left: 3px solid #ff0000;
-            /* Red line for emphasis */
+            transition: border-color 0.3s ease;
+        }
+
+        body.high-contrast ul {
+            list-style-type: disc;
+            /* Standard bullets for clarity */
+            border-left: 3px solid #000080;
         }
 
         .section {
@@ -74,13 +124,20 @@
 
         .cream-note {
             background-color: #3a0000;
-            /* Dark red for the sneaky Cream note */
+            /* Dark red */
             padding: 10px;
             border-left: 4px solid #ff3333;
             font-style: italic;
             margin: 10px 0;
             color: #ff9999;
-            /* Lighter red for readability */
+            transition: all 0.3s ease;
+        }
+
+        body.high-contrast .cream-note {
+            background-color: #e6e6fa;
+            /* Light lavender for contrast */
+            border-left: 4px solid #000080;
+            color: #000000;
         }
 
         footer {
@@ -88,21 +145,61 @@
             margin-top: 20px;
             font-size: 0.9em;
             color: #ff6666;
-            /* Reddish for footer */
+            transition: color 0.3s ease;
+        }
+
+        body.high-contrast footer {
+            color: #000000;
         }
 
         code {
             background-color: #4a0000;
-            /* Dark red for code blocks */
+            /* Dark red */
             color: #ffcccc;
             padding: 2px 4px;
             border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        body.high-contrast code {
+            background-color: #e0e0e0;
+            /* Light gray */
+            color: #000000;
+        }
+
+        .theme-button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: #ff0000;
+            /* Red button */
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .theme-button:hover {
+            background-color: #cc0000;
+            /* Darker red on hover */
+        }
+
+        body.high-contrast .theme-button {
+            background-color: #000080;
+            /* Navy blue */
+        }
+
+        body.high-contrast .theme-button:hover {
+            background-color: #000060;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
+        <button class="theme-button" onclick="toggleTheme()">Switch to High-Contrast Theme</button>
         <h1>Tick-IT Planning System Specification</h1>
         <p class="cream-note">Beware: This system was designed with the ruthless efficiency of Cream the Rabbit’s
             planning skills! *cackles*</p>
@@ -184,6 +281,18 @@
             <p>© Tick-IT 2025 | Forged in darkness!</p>
         </footer>
     </div>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('high-contrast');
+            const button = document.querySelector('.theme-button');
+            if (document.body.classList.contains('high-contrast')) {
+                button.textContent = 'Switch to Evil Theme';
+            } else {
+                button.textContent = 'Switch to High-Contrast Theme';
+            }
+        }
+    </script>
 </body>
 
 </html>
