@@ -38,13 +38,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $aanmaakstijd = date('H:i:s');
 
     try {
-        // Check for duplicate email
         $checkSql = "SELECT COUNT(*) FROM account WHERE email = :email";
         $checkStmt = $pdo->prepare($checkSql);
         $checkStmt->execute([':email' => $email]);
 
         if ($checkStmt->fetchColumn() > 0) {
-            $message = "⚠️ Whoops, that email is already taken.";
+            $message = "Email already taken.";
         } else {
             $sql = "INSERT INTO account 
                     (aanmaakstijd, voornaam, achternaam, wachtwoord, telefoonnr, email, geslacht, isDocent, isAdmin, adres, postcode) 
@@ -64,12 +63,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 ':postcode' => $postcode
             ]);
 
-            // REDIRECT TO INDEX.PHP AFTER SUCCESSFUL REGISTRATION
             header("Location: index.php");
-            exit(); // Important: stop script execution after redirect
+            exit();
         }
     } catch (PDOException $e) {
-        $message = "❌ Insert failed: " . htmlspecialchars($e->getMessage());
+        $message = "Insert failed:" . htmlspecialchars($e->getMessage());
     }
 }
 ?>

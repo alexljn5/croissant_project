@@ -303,13 +303,19 @@ p {
   letter-spacing: 1px;
   text-shadow: 0 1px 4px #fff8;
   font-family: 'Segoe UI', sans-serif;
+<<<<<<< Updated upstream
   text-align: center;
   display: block;
+=======
+  text-align: center;/* Voeg deze regel toe */
+  display: block;     /* Zorg dat het als blok staat */
+>>>>>>> Stashed changes
 }
 
 .registreren {
   text-align: center;
 }
+
 .page-title {
   color: #000;
   font-size: 2.0rem;
