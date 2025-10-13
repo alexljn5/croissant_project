@@ -4,7 +4,7 @@ session_start();
 // Database connection
 $servername = "db"; // Matches MySQL service name in docker-compose.yml
 $username = "root";
-$password = "password"; // change if needed
+$password = "password"; // Must match MYSQL_ROOT_PASSWORD in docker-compose.yml
 $dbname = "croissantdb";
 
 try {
@@ -80,13 +80,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ':address' => $address,
         ':postal_code' => $postal_code
       ]);
-
-      // Since accountnr is manually generated (not AUTO_INCREMENT), lastInsertId() returns 0.
-      // Show the actual generated account number to the user instead.
-      $message = "✅ Success! User added. Accountnr: " . $accountnr;
+      $message = "✅ Success! User added. Account ID: " . htmlspecialchars($account_id);
     }
   } catch (PDOException $e) {
-    $message = "❌ Insert failed: " . htmlspecialchars($e->getMessage());
+    $message = "❌ Error: " . htmlspecialchars($e->getMessage());
   }
 }
 ?>
@@ -115,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <div class="page-wrapper">
     <div class="outer-div">
       <div class="registreren">
-        <h1 class="page-title">Registeren</h1>
+        <h1 class="page-title">Register</h1>
       </div>
 
       <!-- Show PHP messages if any -->
