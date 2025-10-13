@@ -87,6 +87,26 @@ if ($rows) {
     echo "<p>Geen klassen gevonden.</p>";
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
+      <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Tick-IT</title>
+  <script src="javascript/account-id-assigner.js"></script>
+</head>
+
+<body>
+  <div class="top">
+    <div class="logo-border">
+      <img src="./img/tickItLogo.png" alt="Tick-IT Logo">
+    </div>
+    <div class="header-container">
+      <h1 class="header-title">Tick-IT</h1>
+    </div>
+  </div>
 
 <hr>
 
@@ -101,5 +121,8 @@ if ($rows) {
 <hr>
 <a href="index.php" class="button">Terug naar index</a>
 
+  <div class="bodem">
+    <p>© Tick-IT 2025</p>
+  </div>
 </body>
 </html>
