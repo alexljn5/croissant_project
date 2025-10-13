@@ -97,13 +97,13 @@ $availableTickets = array_filter($allTickets, function ($t) use ($assignedIds) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ticket Page 🐰</title>
+    <title>Ticket Page</title>
     <link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="ticket-body">
     <div class="ticket-container">
-        <h1 class="ticket-heading">🎫 Student Ticket Dashboard</h1>
+        <h1 class="ticket-heading">Student Ticket Dashboard</h1>
 
         <h2 class="ticket-heading">Available Tickets</h2>
         <?php if (empty($availableTickets)): ?>
@@ -143,31 +143,31 @@ $availableTickets = array_filter($allTickets, function ($t) use ($assignedIds) {
 
         <h2 class="ticket-heading">Your Tickets</h2>
         <?php if (empty($studentTickets)): ?>
-            <p class="ticket-message">You have no assigned tickets, nya~ 💤</p>
-        <?php else: ?>
-            <table class="ticket-table">
-                <thead>
-                    <tr>
-                        <th>Ticket ID</th>
-                        <th>Description</th>
-                        <th>Class Type</th>
-                        <th>Created</th>
-                        <th>Expires</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($studentTickets as $t): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($t['ticket_id']) ?></td>
-                            <td><?= htmlspecialchars($t['description']) ?></td>
-                            <td><?= htmlspecialchars($t['class_type']) ?></td>
-                            <td><?= htmlspecialchars($t['creation_date']) ?></td>
-                            <td><?= htmlspecialchars($t['expiration_date']) ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
+            <p class="ticket-message">You have no assigned tickets, nya~ uwu (,,>﹏<,,)👉👈 💤</p>
+                <?php else: ?>
+                    <table class="ticket-table">
+                        <thead>
+                            <tr>
+                                <th>Ticket ID</th>
+                                <th>Description</th>
+                                <th>Class Type</th>
+                                <th>Created</th>
+                                <th>Expires</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($studentTickets as $t): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($t['ticket_id']) ?></td>
+                                    <td><?= htmlspecialchars($t['description']) ?></td>
+                                    <td><?= htmlspecialchars($t['class_type']) ?></td>
+                                    <td><?= htmlspecialchars($t['creation_date']) ?></td>
+                                    <td><?= htmlspecialchars($t['expiration_date']) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php endif; ?>
     </div>
 </body>
 

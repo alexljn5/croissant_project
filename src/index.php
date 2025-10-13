@@ -1,30 +1,20 @@
 <?php
 session_start();
 
-// Database connection
+// Database credentials (hardcoded for now, but we'll secure them)
 $servername = "db"; // Matches docker-compose.yml
 $username = "root";
 $password = "password"; // Must match MYSQL_ROOT_PASSWORD
 $dbname = "croissantdb";
 
 try {
-  $retries = 5;
-  $retryInterval = 5;
-  while ($retries > 0) {
-    try {
-      $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
-      $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      break;
-    } catch (PDOException $e) {
-      $retries--;
-      if ($retries == 0) {
-        die("<p style='color:red;'>Database connection failed after retries: " . htmlspecialchars($e->getMessage()) . " (Code: " . $e->getCode() . ")</p>");
-      }
-      sleep($retryInterval);
-    }
-  }
+  $dsn = "mysql:host=$servername;dbname=$dbname;charset=utf8mb4";
+  $pdo = new PDO($dsn, $username, $password);
+  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  // Cheese sneers, "Hmph, database tamed!"
 } catch (PDOException $e) {
-  die("<p style='color:red;'>Database connection failed: " . htmlspecialchars($e->getMessage()) . "</p>");
+  //if any of you teammates care to see the bunny reference here, come up to me with the die message changed and I will give you a euro.
+  die("Database error, you silly bun-bun Creamy rabbit!: " . htmlspecialchars($e->getMessage()) . " (Code: " . $e->getCode() . ")");
 }
 
 $message = "";
@@ -35,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $password = isset($_POST['password']) ? trim($_POST['password']) : '';
 
   if (empty($email) || empty($password)) {
-    $message = "<p style='color:red;'>Please fill in all fields.</p>";
+    $message = "Please fill in all fields.";
   } else {
     try {
       $stmt = $pdo->prepare("SELECT account_id, email, password, is_teacher, is_admin FROM account WHERE email = ?");
@@ -47,18 +37,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['email'] = $user['email'];
         $_SESSION['is_teacher'] = $user['is_teacher'];
         $_SESSION['is_admin'] = $user['is_admin'];
-        $message = "<p style='color:green;'>Login successful! Redirecting...</p>";
-        header("Refresh: 2; url=/webPages/ticketPage.php"); // Redirect to ticketPage.php after 2 seconds
+        $message = "Login successful! Redirecting...";
+        header("Refresh: 2; url=/webPages/ticketPage.php");
       } else {
-        $message = "<p style='color:red;'>Invalid email or password.</p>";
+        $message = "Invalid email or password.";
       }
     } catch (PDOException $e) {
-      $message = "<p style='color:red;'>Error: " . htmlspecialchars($e->getMessage()) . "</p>";
+      $message = "Error: " . htmlspecialchars($e->getMessage());
     }
   }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -78,37 +67,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <h1 class="header-title">Tick-IT</h1>
     </div>
   </div>
-
   <div class="page-wrapper">
     <div class="outer-div">
       <div class="login">
         <h1 class="page-title">Log In</h1>
       </div>
-
-      <!-- Show PHP messages if any -->
       <?php if (!empty($message)): ?>
         <p style="color:<?php echo strpos($message, 'successful') !== false ? 'green' : 'red'; ?>; text-align:center;">
-          <?= htmlspecialchars($message) ?>
+          <?php echo htmlspecialchars($message); ?>
         </p>
       <?php endif; ?>
-
       <form action="" method="post">
         <label>Email:</label>
         <input class="form-input" type="email" name="email" required>
-
         <label>Password:</label>
         <input class="form-input" type="password" name="password" required>
-
         <input class="submit" type="submit" value="Log In">
       </form>
-
       <div class="nav-buttons">
         <a href="index.php"><button type="button">Login</button></a>
         <a href="register.php"><button type="button">Register</button></a>
       </div>
     </div>
   </div>
-
   <div class="bodem">
     <p>© Tick-IT 2025</p>
   </div>

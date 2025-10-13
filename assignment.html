@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tick-IT Planning System Specification</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            /* Edgy, typewriter vibe */
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #1a1a1a;
+            /* Dark black for evil theme */
+            color: #ff0000;
+            /* Blood red text */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #2b2b2b;
+            /* Darker gray-black for contrast */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 0, 0, 0.3);
+            /* Red-tinted shadow */
+            border: 2px solid #ff0000;
+            /* Red border for menace */
+        }
+
+        h1 {
+            color: #ff3333;
+            /* Brighter red for title */
+            text-align: center;
+            font-size: 2.5em;
+            text-transform: uppercase;
+            /* Bold and commanding */
+        }
+
+        h2 {
+            color: #ff6666;
+            /* Lighter red for headings */
+            border-bottom: 2px solid #ff0000;
+            padding-bottom: 5px;
+            margin-top: 20px;
+        }
+
+        h3 {
+            color: #ff9999;
+            /* Softer red for subheadings */
+        }
+
+        p,
+        li {
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+
+        ul {
+            list-style-type: none;
+            /* No bullets for a sleek, evil look */
+            margin-left: 20px;
+            padding-left: 10px;
+            border-left: 3px solid #ff0000;
+            /* Red line for emphasis */
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .cream-note {
+            background-color: #3a0000;
+            /* Dark red for the sneaky Cream note */
+            padding: 10px;
+            border-left: 4px solid #ff3333;
+            font-style: italic;
+            margin: 10px 0;
+            color: #ff9999;
+            /* Lighter red for readability */
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #ff6666;
+            /* Reddish for footer */
+        }
+
+        code {
+            background-color: #4a0000;
+            /* Dark red for code blocks */
+            color: #ffcccc;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Tick-IT Planning System Specification</h1>
+        <p class="cream-note">Beware: This system was designed with the ruthless efficiency of Cream the Rabbit’s
+            planning skills! *cackles*</p>
+
+        <div class="section">
+            <h2>System Overview</h2>
+            <p>The planning system enables students to create weekly or daily schedules for their assignments. The
+                system uses "tickets" to represent individual tasks tied to specific courses. Each ticket includes an
+                estimated completion time, commanding students to allocate approximately 20 hours per week to their
+                tasks. Once a ticket is completed, it is locked to prevent reuse, ensuring students remain disciplined.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Student Responsibilities</h2>
+            <h3>Creating Schedules</h3>
+            <ul>
+                <li>Students must create a weekly or daily plan by selecting tickets (tasks) for each course.</li>
+                <li>Each ticket provides a time estimate to enforce efficient workload management.</li>
+            </ul>
+            <h3>End-of-Period Review</h3>
+            <ul>
+                <li>At the end of each week or day, students must confirm whether they achieved their planned goals.
+                </li>
+                <li>If the schedule was not met, students must confess their failures (e.g., time shortages or task
+                    difficulty).</li>
+                <li>This review can be paired with creating a new schedule for the next period.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Teacher Responsibilities</h2>
+            <h3>Course and Ticket Management</h3>
+            <ul>
+                <li>Teachers can add, edit, or delete courses in the system.</li>
+                <li>For each course, teachers can create, modify, or remove tickets, specifying details like task
+                    descriptions and time estimates.</li>
+            </ul>
+            <h3>Monitoring Student Progress</h3>
+            <ul>
+                <li>Teachers can view an overview of a specific group or cohort, revealing which students have submitted
+                    their schedules and which have defied orders.</li>
+                <li>Teachers can access individual student planning histories, including current and past schedules, to
+                    enforce progress.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>User Access and Administration</h2>
+            <h3>Student Access</h3>
+            <ul>
+                <li>Students access the system using their school email addresses, ensuring secure and controlled access
+                    to their schedules.</li>
+                <li>This ensures strict organization and accessibility.</li>
+            </ul>
+            <h3>Teacher (Admin) Functions</h3>
+            <ul>
+                <li>Teachers with administrative roles can add students by uploading CSV files containing student data
+                    in the format: student number, first name, last name, group/cohort.</li>
+                <li>Teachers must be manually added or removed by administrators, maintaining an ironclad control over
+                    access.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Technical Notes</h2>
+            <ul>
+                <li>The system must lock completed tickets to prevent reuse, ensuring relentless tracking.</li>
+                <li>The interface must be intuitive, with clear commands for students to submit reviews and create new
+                    schedules.</li>
+                <li>Teacher dashboards must offer unyielding filters for viewing group or individual student progress.
+                </li>
+                <li>CSV uploads must obey a strict format (e.g., <code>student_number,first_name,last_name,group</code>)
+                    to prevent errors.</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>© Tick-IT 2025 | Forged in darkness!</p>
+        </footer>
+    </div>
+</body>
+
+</html>
