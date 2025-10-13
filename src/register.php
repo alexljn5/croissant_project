@@ -3,7 +3,7 @@ session_start();
 
 $servername = "localhost";
 $username = "root";
-$password = "password"; // change if needed
+$password = "password";
 $dbname = "croissantdb";
 
 try {
@@ -38,13 +38,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $aanmaakstijd = date('H:i:s');
 
   try {
-    // Check for duplicate email
     $checkSql = "SELECT COUNT(*) FROM account WHERE email = :email";
     $checkStmt = $pdo->prepare($checkSql);
     $checkStmt->execute([':email' => $email]);
 
     if ($checkStmt->fetchColumn() > 0) {
-      $message = "⚠️ Whoops, that email is already taken.";
+      $message = "Email already taken.";
     } else {
       // Generate a random 6-digit account number
       do {
@@ -74,14 +73,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
       // Since accountnr is manually generated (not AUTO_INCREMENT), lastInsertId() returns 0.
       // Show the actual generated account number to the user instead.
-      $message = "✅ Success! User added. Accountnr: " . $accountnr;
+      $message = "User added, Account " . $accountnr;
     }
   } catch (PDOException $e) {
-    $message = "❌ Insert failed: " . htmlspecialchars($e->getMessage());
+    $message = "Insert failed: " . htmlspecialchars($e->getMessage());
   }
 }
 ?>
-
+|
 <!DOCTYPE html>
 <html lang="en">
 
@@ -117,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <div class="page-wrapper">
     <div class="outer-div">
       <div class="registreren">
-        <h1 class="page-title">Registeren</h1>
+        <h1 class="page-title">Registreren</h1>
       </div>
       <?php if (!empty($message)): ?>
         <p class="<?php echo (strpos($message, 'Success') !== false ? 'message' : 'error'); ?>">
