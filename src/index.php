@@ -82,12 +82,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <input class="form-input" type="email" name="email" required>
         <label>Password:</label>
         <input class="form-input" type="password" name="password" required>
-        <input class="submit" type="submit" value="Log In">
+        <div class="nav-buttons">
+          <button class="submit" type="submit">Log In</button>
+          <a href="register.php"><button type="button">Register</button></a>
+        </div>
       </form>
-      <div class="nav-buttons">
-        <a href="index.php"><button type="button">Login</button></a>
-        <a href="register.php"><button type="button">Register</button></a>
-      </div>
     </div>
   </div>
   <div class="bodem">
