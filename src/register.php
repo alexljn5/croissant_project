@@ -1,41 +1,52 @@
 <?php
 session_start();
 
-$servername = "localhost";
+// Database connection
+$servername = "db"; // Matches MySQL service name in docker-compose.yml
 $username = "root";
-$password = "password";
+$password = "password"; // change if needed
 $dbname = "croissantdb";
 
 try {
-  $pdo = new PDO(
-    "mysql:host=db;dbname=croissantdb;charset=utf8",
-    $username,
-    $password
-  );
-  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  // Retry mechanism to handle MySQL initialization delay
+  $retries = 5;
+  $retryInterval = 5; // Seconds
+  while ($retries > 0) {
+    try {
+      $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
+      $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      break; // Exit loop on successful connection
+    } catch (PDOException $e) {
+      $retries--;
+      if ($retries == 0) {
+        die("<p style='color:red;'>Database connection failed after retries: " . htmlspecialchars($e->getMessage()) . " (Code: " . $e->getCode() . ")</p>");
+      }
+      sleep($retryInterval); // Wait before retrying
+    }
+  }
 } catch (PDOException $e) {
-  die("<p style='color:red;'>Database connection failed: " . htmlspecialchars($e->getMessage()) . "</p>");
+  die("<p style='color:red;'>Database connection failed: " . htmlspecialchars($e->getMessage()) . " (Code: " . $e->getCode() . ")</p>");
 }
 
 $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  $voornaam = trim($_POST['voornaam']);
-  $achternaam = trim($_POST['achternaam']);
-  $wachtwoord = password_hash($_POST['wachtwoord'], PASSWORD_DEFAULT);
+  // Validate and sanitize input
+  $first_name = isset($_POST['first_name']) ? trim($_POST['first_name']) : '';
+  $last_name = isset($_POST['last_name']) ? trim($_POST['last_name']) : '';
+  $password = isset($_POST['password']) ? password_hash(trim($_POST['password']), PASSWORD_DEFAULT) : '';
+  $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+  $phone_number = isset($_POST['phone_number']) ? trim($_POST['phone_number']) : '';
+  $address = isset($_POST['address']) ? trim($_POST['address']) : '';
+  $postal_code = isset($_POST['postal_code']) ? trim($_POST['postal_code']) : '';
+  $creation_time = date('H:i:s');
+
   $genderMap = [
     'man' => 'M',
     'vrouw' => 'V',
     'other' => 'O',
   ];
-
-  $geslacht = $genderMap[$_POST['gender']] ?? 'U'; // 'U' = unknown fallback
-
-  $email = trim($_POST['email']);
-  $telefoonnr = trim($_POST['telefoonnr']);
-  $adres = trim($_POST['adres']);
-  $postcode = trim($_POST['postcode']);
-  $aanmaakstijd = date('H:i:s');
+  $gender = isset($_POST['gender']) && isset($genderMap[$_POST['gender']]) ? $genderMap[$_POST['gender']] : 'U';
 
   try {
     $checkSql = "SELECT COUNT(*) FROM account WHERE email = :email";
@@ -45,38 +56,37 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($checkStmt->fetchColumn() > 0) {
       $message = "Email already taken.";
     } else {
-      // Generate a random 6-digit account number
+      // Generate a random 6-digit account ID
       do {
-          $accountnr = mt_rand(100000, 999999);
-          $checkAccount = $pdo->prepare("SELECT COUNT(*) FROM account WHERE accountnr = ?");
-          $checkAccount->execute([$accountnr]);
+        $account_id = mt_rand(100000, 999999);
+        $checkAccount = $pdo->prepare("SELECT COUNT(*) FROM account WHERE account_id = ?");
+        $checkAccount->execute([$account_id]);
       } while ($checkAccount->fetchColumn() > 0);
 
       $sql = "INSERT INTO account 
-                    (accountnr, aanmaakstijd, voornaam, achternaam, wachtwoord, telefoonnr, email, geslacht, isDocent, isAdmin, adres, postcode) 
+                    (account_id, creation_time, first_name, last_name, password, phone_number, email, gender, is_teacher, is_admin, address, postal_code) 
                     VALUES 
-                    (:accountnr, :aanmaakstijd, :voornaam, :achternaam, :wachtwoord, :telefoonnr, :email, :geslacht, 0, 0, :adres, :postcode)";
-
+                    (:account_id, :creation_time, :first_name, :last_name, :password, :phone_number, :email, :gender, 0, 0, :address, :postal_code)";
       $stmt = $pdo->prepare($sql);
       $stmt->execute([
-        ':accountnr' => $accountnr,
-        ':aanmaakstijd' => $aanmaakstijd,
-        ':voornaam' => $voornaam,
-        ':achternaam' => $achternaam,
-        ':wachtwoord' => $wachtwoord,
-        ':telefoonnr' => $telefoonnr,
+        ':account_id' => $account_id,
+        ':creation_time' => $creation_time,
+        ':first_name' => $first_name,
+        ':last_name' => $last_name,
+        ':password' => $password,
+        ':phone_number' => $phone_number,
         ':email' => $email,
-        ':geslacht' => $geslacht,
-        ':adres' => $adres,
-        ':postcode' => $postcode
+        ':gender' => $gender,
+        ':address' => $address,
+        ':postal_code' => $postal_code
       ]);
 
       // Since accountnr is manually generated (not AUTO_INCREMENT), lastInsertId() returns 0.
       // Show the actual generated account number to the user instead.
-      $message = "User added, Account " . $accountnr;
+      $message = "✅ Success! User added. Accountnr: " . $accountnr;
     }
   } catch (PDOException $e) {
-    $message = "Insert failed: " . htmlspecialchars($e->getMessage());
+    $message = "❌ Insert failed: " . htmlspecialchars($e->getMessage());
   }
 }
 ?>
@@ -87,27 +97,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tick-IT</title>
-  <link rel="icon" type="image/x-icon" href="./img/tickItLogo.png">
+  <title>Register - Tick-IT</title>
+  <script src="javascript/account-id-assigner.js"></script>
   <link rel="stylesheet" href="styles.css">
-  <style>
-    .message {
-      color: green;
-      margin-bottom: 15px;
-      font-weight: bold;
-    }
-
-    .error {
-      color: red;
-      margin-bottom: 15px;
-      font-weight: bold;
-    }
-  </style>
 </head>
 
 <body>
   <div class="top">
-    <img class="logo-border" src="./img/tickItLogo.png" alt="Tick-IT Logo">
+    <div class="logo-border">
+      <img src="./img/tickItLogo.png" alt="Tick-IT Logo">
+    </div>
     <div class="header-container">
       <h1 class="header-title">Tick-IT</h1>
     </div>
@@ -116,54 +115,51 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <div class="page-wrapper">
     <div class="outer-div">
       <div class="registreren">
-        <h1 class="page-title">Registreren</h1>
+        <h1 class="page-title">Registeren</h1>
       </div>
+
+      <!-- Show PHP messages if any -->
       <?php if (!empty($message)): ?>
-        <p class="<?php echo (strpos($message, 'Success') !== false ? 'message' : 'error'); ?>">
-          <?php echo htmlspecialchars($message); ?>
+        <p style="color:<?php echo strpos($message, 'Success') !== false ? 'green' : 'red'; ?>; text-align:center;">
+          <?= htmlspecialchars($message) ?>
         </p>
       <?php endif; ?>
-  <form id="register-form" action="" method="post">
-        <label>Voornaam:</label>
-        <input class="form-input" type="text" name="voornaam"
-          value="<?php echo isset($_POST['voornaam']) ? htmlspecialchars($_POST['voornaam']) : ''; ?>" required>
 
-        <label>Achternaam:</label>
-        <input class="form-input" type="text" name="achternaam"
-          value="<?php echo isset($_POST['achternaam']) ? htmlspecialchars($_POST['achternaam']) : ''; ?>" required>
+      <form action="" method="post">
+        <label>First Name:</label>
+        <input class="form-input" type="text" name="first_name" required>
 
-        <label>Wachtwoord:</label>
-        <input class="form-input" type="password" name="wachtwoord" required>
+        <label>Last Name:</label>
+        <input class="form-input" type="text" name="last_name" required>
 
-        <label for="gender">Gender:</label>
-        <select class="form-input" name="gender" id="gender">
-          <option value="man" <?php echo (isset($_POST['gender']) && $_POST['gender'] === 'man') ? 'selected' : ''; ?>>Man
-          </option>
-          <option value="vrouw" <?php echo (isset($_POST['gender']) && $_POST['gender'] === 'vrouw') ? 'selected' : ''; ?>>Vrouw</option>
-          <option value="other" <?php echo (isset($_POST['gender']) && $_POST['gender'] === 'other') ? 'selected' : ''; ?>>Other</option>
+        <label>Email:</label>
+        <input class="form-input" type="email" name="email" required>
+
+        <label>Password:</label>
+        <input class="form-input" type="password" name="password" required>
+
+        <label>Gender:</label>
+        <select class="form-input" name="gender" required>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
         </select>
 
-        <label>E-mail:</label>
-        <input class="form-input" type="email" name="email"
-          value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>" required>
+        <label>Phone Number:</label>
+        <input class="form-input" type="text" name="phone_number" required>
 
-        <label>Telefoonnummer:</label>
-        <input class="form-input" type="text" name="telefoonnr"
-          value="<?php echo isset($_POST['telefoonnr']) ? htmlspecialchars($_POST['telefoonnr']) : ''; ?>" required>
+        <label>Address:</label>
+        <input class="form-input" type="text" name="address" required>
 
-        <label>Adres:</label>
-        <input class="form-input" type="text" name="adres"
-          value="<?php echo isset($_POST['adres']) ? htmlspecialchars($_POST['adres']) : ''; ?>" required>
+        <label>Postal Code:</label>
+        <input class="form-input" type="text" name="postal_code" required>
 
-        <label>Postcode:</label>
-        <input class="form-input" type="text" name="postcode"
-          value="<?php echo isset($_POST['postcode']) ? htmlspecialchars($_POST['postcode']) : ''; ?>" required>
-
-        <input id="verzenden" class="submit" type="submit" value="Submit">
+        <input id="verzenden" class="submit" type="submit" value="Sign Up">
       </form>
+
       <div class="nav-buttons">
         <a href="index.php"><button type="button">Login</button></a>
-        <a href="register.php"><button type="button">Registreren</button></a>
+        <a href="register.php"><button type="button">Register</button></a>
       </div>
     </div>
   </div>
@@ -171,7 +167,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <div class="bodem">
     <p>© Tick-IT 2025</p>
   </div>
-    <script src="javascript/account-id-assigner.js"></script>
 </body>
 
 </html>

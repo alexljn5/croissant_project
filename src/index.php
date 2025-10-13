@@ -1,9 +1,10 @@
 <?php
 session_start();
 
-$servername = "db";
+// Database connection
+$servername = "db"; // Matches docker-compose.yml
 $username = "root";
-$password = "password";
+$password = "password"; // Must match MYSQL_ROOT_PASSWORD
 $dbname = "croissantdb";
 
 try {
@@ -23,57 +24,37 @@ try {
     }
   }
 } catch (PDOException $e) {
-  die("<p style='color:red;'>Database connection failed: " . htmlspecialchars($e->getMessage()) . " (Code: " . $e->getCode() . ")</p>");
+  die("<p style='color:red;'>Database connection failed: " . htmlspecialchars($e->getMessage()) . "</p>");
 }
 
 $message = "";
 
+// Handle login
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  $voornaam = isset($_POST['voornaam']) ? trim($_POST['voornaam']) : '';
-  $achternaam = isset($_POST['achternaam']) ? trim($_POST['achternaam']) : '';
-  $wachtwoord = isset($_POST['wachtwoord']) ? password_hash(trim($_POST['wachtwoord']), PASSWORD_DEFAULT) : '';
   $email = isset($_POST['email']) ? trim($_POST['email']) : '';
-  $telefoonnr = isset($_POST['telefoonnr']) ? trim($_POST['telefoonnr']) : '';
-  $adres = isset($_POST['adres']) ? trim($_POST['adres']) : '';
-  $postcode = isset($_POST['postcode']) ? trim($_POST['postcode']) : '';
-  $aanmaakstijd = date('H:i:s');
+  $password = isset($_POST['password']) ? trim($_POST['password']) : '';
 
-  $genderMap = [
-    'man' => 'M',
-    'vrouw' => 'V',
-    'other' => 'O',
-  ];
-  $geslacht = isset($_POST['gender']) && isset($genderMap[$_POST['gender']]) ? $genderMap[$_POST['gender']] : 'U';
+  if (empty($email) || empty($password)) {
+    $message = "<p style='color:red;'>Please fill in all fields.</p>";
+  } else {
+    try {
+      $stmt = $pdo->prepare("SELECT account_id, email, password, is_teacher, is_admin FROM account WHERE email = ?");
+      $stmt->execute([$email]);
+      $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  try {
-    $checkSql = "SELECT COUNT(*) FROM account WHERE email = :email";
-    $checkStmt = $pdo->prepare($checkSql);
-    $checkStmt->execute([':email' => $email]);
-
-    // gwn een comment
-    if ($checkStmt->fetchColumn() > 0) {
-      $message = "Email already taken.";
-    } else {
-      $sql = "INSERT INTO account 
-                    (aanmaakstijd, voornaam, achternaam, wachtwoord, telefoonnr, email, geslacht, isDocent, isAdmin, adres, postcode) 
-                    VALUES 
-                    (:aanmaakstijd, :voornaam, :achternaam, :wachtwoord, :telefoonnr, :email, :geslacht, 0, 0, :adres, :postcode)";
-      $stmt = $pdo->prepare($sql);
-      $stmt->execute([
-        ':aanmaakstijd' => $aanmaakstijd,
-        ':voornaam' => $voornaam,
-        ':achternaam' => $achternaam,
-        ':wachtwoord' => $wachtwoord,
-        ':telefoonnr' => $telefoonnr,
-        ':email' => $email,
-        ':geslacht' => $geslacht,
-        ':adres' => $adres,
-        ':postcode' => $postcode
-      ]);
-      $message = "Registratie succesvol";
+      if ($user && password_verify($password, $user['password'])) {
+        $_SESSION['account_id'] = $user['account_id'];
+        $_SESSION['email'] = $user['email'];
+        $_SESSION['is_teacher'] = $user['is_teacher'];
+        $_SESSION['is_admin'] = $user['is_admin'];
+        $message = "<p style='color:green;'>Login successful! Redirecting...</p>";
+        header("Refresh: 2; url=/webPages/ticketPage.php"); // Redirect to ticketPage.php after 2 seconds
+      } else {
+        $message = "<p style='color:red;'>Invalid email or password.</p>";
+      }
+    } catch (PDOException $e) {
+      $message = "<p style='color:red;'>Error: " . htmlspecialchars($e->getMessage()) . "</p>";
     }
-  } catch (PDOException $e) {
-    $message = "Error: " . htmlspecialchars($e->getMessage());
   }
 }
 ?>
@@ -84,8 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register - Tick-IT</title>
-  <script src="javascript/account-id-assigner.js"></script>
+  <title>Login - Tick-IT</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -101,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
   <div class="page-wrapper">
     <div class="outer-div">
-      <div class="registreren">
+      <div class="login">
         <h1 class="page-title">Log In</h1>
       </div>
 
@@ -113,16 +93,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <?php endif; ?>
 
       <form action="" method="post">
-        <label>E-mail:</label>
+        <label>Email:</label>
         <input class="form-input" type="email" name="email" required>
 
-        <label>Wachtwoord:</label>
-        <input class="form-input" type="password" name="wachtwoord" required>
+        <label>Password:</label>
+        <input class="form-input" type="password" name="password" required>
+
+        <input class="submit" type="submit" value="Log In">
       </form>
 
       <div class="nav-buttons">
         <a href="index.php"><button type="button">Login</button></a>
-        <a href="register.php"><button type="button">Registreren</button></a>
+        <a href="register.php"><button type="button">Register</button></a>
       </div>
     </div>
   </div>
