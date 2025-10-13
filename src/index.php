@@ -50,6 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $checkStmt = $pdo->prepare($checkSql);
     $checkStmt->execute([':email' => $email]);
 
+    // gwn een comment
     if ($checkStmt->fetchColumn() > 0) {
       $message = "Email already taken.";
     } else {
