@@ -63,34 +63,44 @@ $message = "";
 
     <?php
     // Fetch students
-    $student_query = "SELECT a.first_name, a.last_name, a.email, c.class_type 
+// Fetch students
+$student_query = "SELECT a.account_id, a.first_name, a.last_name, a.email, c.class_type 
                  FROM croissantdb.account a 
                  JOIN croissantdb.account_has_class ahc ON a.account_id = ahc.account_id 
                  JOIN croissantdb.class c ON ahc.class_number = c.class_number 
                  WHERE a.is_teacher = 0";
-    $params = [];
+$params = [];
 
-    if ($action === "filterStudents" && $class_filter) {
-        $student_query .= " AND c.class_number = :class_number";
-        $params[':class_number'] = $class_filter;
+if ($action === "filterStudents" && $class_filter) {
+    $student_query .= " AND c.class_number = :class_number";
+    $params[':class_number'] = $class_filter;
+}
+
+$stmt = $pdo->prepare($student_query);
+$stmt->execute($params);
+$student_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if ($student_list) {
+    echo "<ul>";
+    foreach ($student_list as $row) {
+        $name = htmlspecialchars($row["first_name"] . " " . $row["last_name"]);
+        $email = htmlspecialchars($row["email"]);
+        $class_type = htmlspecialchars($row["class_type"]);
+
+        echo "<li style='margin-bottom:10px;'>
+                Student name: $name ($email) - Class: $class_type
+                <form method='POST' action='' style='display:inline; margin-left:15px;'>
+                    <input type='hidden' name='action' value='viewTickets'>
+                    <input type='hidden' name='student_id' value='" . $row['account_id'] . "'>
+                    <button type='submit'>Selecteer</button>
+                </form>
+              </li>";
     }
+    echo "</ul>";
+} else {
+    echo "<p>No students found.</p>";
+}
 
-    $stmt = $pdo->prepare($student_query);
-    $stmt->execute($params);
-    $student_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    if ($student_list) {
-        echo "<ul>";
-        foreach ($student_list as $row) {
-            $name = htmlspecialchars($row["first_name"] . " " . $row["last_name"]);
-            $email = htmlspecialchars($row["email"]);
-            $class_type = htmlspecialchars($row["class_type"]);
-            echo "<li style='margin-bottom:10px;'>Student name: $name ($email) - Class: $class_type</li>";
-        }
-        echo "</ul>";
-    } else {
-        echo "<p>No students found.</p>";
-    }
 
     if ($action === "viewTickets" && !empty($_POST['student_id'])) {
     $student_id = $_POST['student_id'];
@@ -130,6 +140,7 @@ $message = "";
             ON st.class_number = c.class_number
         WHERE ahst.account_id = :student_id
           AND st.expiration_date < CURDATE()
+          
     ");
     $stmt->execute([':student_id' => $student_id]);
     $completed_tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
