@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['is_teacher'] = $user['is_teacher'];
         $_SESSION['is_admin'] = $user['is_admin'];
         $message = "Login successful! Redirecting...";
-        header("Refresh: 2; url=/webPages/ticketPage.php");
+        header("Refresh: 2; url=/home.php");
       } else {
         $message = "Invalid email or password.";
       }
@@ -59,14 +59,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 
 <body>
-  <div class="top">
-    <div class="logo-border">
-      <img src="./img/tickItLogo.png" alt="Tick-IT Logo">
-    </div>
-    <div class="header-container">
-      <h1 class="header-title">Tick-IT</h1>
-    </div>
-  </div>
+  <?php
+  define('INCLUDED', true);
+  include 'components/header.php';
+  ?>
   <div class="page-wrapper">
     <div class="outer-div">
       <div class="login">
@@ -89,9 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       </form>
     </div>
   </div>
-  <div class="bodem">
-    <p>© Tick-IT 2025</p>
-  </div>
+  <?php include 'components/footer.php'; ?>
 </body>
 
 </html>

@@ -2,32 +2,32 @@
 session_start();
 
 // --------------------------------------------------
-// Database connection
-// --------------------------------------------------
-$servername = "db"; // Matches MySQL service name in docker-compose.yml
-$username = "root";
-$password = "password"; // Must match MYSQL_ROOT_PASSWORD in docker-compose.yml
-$dbname = "croissantdb";
-
-try {
-    $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Database connection failed: " . $e->getMessage());
-}
-
-// --------------------------------------------------
-// Check login
+// Access Control
 // --------------------------------------------------
 if (!isset($_SESSION['account_id'])) {
-    header('Location: login.php');
+    header('Location: /index.php');
     exit();
 }
 
 $account_id = $_SESSION['account_id'];
 
 // --------------------------------------------------
-// 1. Fetch all student tickets
+// Database Connection
+// --------------------------------------------------
+$servername = "db";
+$username = "root";
+$password = "password";
+$dbname = "croissantdb";
+
+try {
+    $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("<p class='error'>Database connection failed: " . htmlspecialchars($e->getMessage()) . "</p>");
+}
+
+// --------------------------------------------------
+// Fetch all tickets and student’s assigned tickets
 // --------------------------------------------------
 $allTicketsQuery = $pdo->prepare("
     SELECT 
@@ -43,9 +43,6 @@ $allTicketsQuery = $pdo->prepare("
 $allTicketsQuery->execute();
 $allTickets = $allTicketsQuery->fetchAll(PDO::FETCH_ASSOC);
 
-// --------------------------------------------------
-// 2. Fetch tickets the student already has
-// --------------------------------------------------
 $studentTicketsQuery = $pdo->prepare("
     SELECT 
         t.ticket_id,
@@ -62,13 +59,15 @@ $studentTicketsQuery->execute([$account_id]);
 $studentTickets = $studentTicketsQuery->fetchAll(PDO::FETCH_ASSOC);
 
 // --------------------------------------------------
-// 3. Handle ticket assignment (POST)
+// Handle Ticket Assignment
 // --------------------------------------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_ticket_id'])) {
     $ticketId = intval($_POST['assign_ticket_id']);
 
-    // Check if already assigned
-    $check = $pdo->prepare("SELECT * FROM croissantdb.account_has_student_ticket WHERE account_id = ? AND student_ticket_id = ?");
+    $check = $pdo->prepare("
+        SELECT 1 FROM croissantdb.account_has_student_ticket 
+        WHERE account_id = ? AND student_ticket_id = ?
+    ");
     $check->execute([$account_id, $ticketId]);
 
     if ($check->rowCount() === 0) {
@@ -83,92 +82,83 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_ticket_id'])) 
 }
 
 // --------------------------------------------------
-// 4. Filter available tickets (exclude ones already taken by this student)
+// Filter available tickets
 // --------------------------------------------------
 $assignedIds = array_column($studentTickets, 'ticket_id');
-$availableTickets = array_filter($allTickets, function ($t) use ($assignedIds) {
-    return !in_array($t['ticket_id'], $assignedIds);
-});
+$availableTickets = array_filter($allTickets, fn($t) => !in_array($t['ticket_id'], $assignedIds));
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ticket Page</title>
-    <link rel="stylesheet" href="../styles.css">
+    <title>Student Ticket Dashboard - Tick-IT</title>
+    <link rel="stylesheet" href="/styles.css?v=<?php echo time(); ?>">
 </head>
 
-<body class="ticket-body">
-    <div class="ticket-container">
-        <h1 class="ticket-heading">Student Ticket Dashboard</h1>
+<body>
+    <?php define('INCLUDED', true);
+    include '../components/header.php'; ?>
 
-        <h2 class="ticket-heading">Available Tickets</h2>
-        <?php if (empty($availableTickets)): ?>
-            <p class="ticket-message">No available tickets right now, Cream~ 🐰💤</p>
-        <?php else: ?>
-            <table class="ticket-table">
-                <thead>
-                    <tr>
-                        <th>Ticket ID</th>
-                        <th>Description</th>
-                        <th>Class Type</th>
-                        <th>Created</th>
-                        <th>Expires</th>
-                        <th>Assign</th>
-                    </tr>
-                </thead>
-                <tbody>
+    <div class="main-content">
+        <h1 class="page-title">Student Ticket Dashboard</h1>
+
+        <!-- Available Tickets -->
+        <div class="outer-div">
+            <h2>Available Tickets</h2>
+            <?php if (empty($availableTickets)): ?>
+                <p>No available tickets at the moment.</p>
+            <?php else: ?>
+                <div class="ticket-grid">
                     <?php foreach ($availableTickets as $t): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($t['ticket_id']) ?></td>
-                            <td><?= htmlspecialchars($t['description']) ?></td>
-                            <td><?= htmlspecialchars($t['class_type']) ?></td>
-                            <td><?= htmlspecialchars($t['creation_date']) ?></td>
-                            <td><?= htmlspecialchars($t['expiration_date']) ?></td>
-                            <td>
-                                <form method="POST" style="margin:0;">
-                                    <input type="hidden" name="assign_ticket_id"
-                                        value="<?= htmlspecialchars($t['ticket_id']) ?>">
-                                    <button type="submit" class="ticket-button">Assign</button>
-                                </form>
-                            </td>
-                        </tr>
+                        <div class="ticket-card">
+                            <div class="ticket-info">
+                                <p><strong>ID:</strong> <?= htmlspecialchars($t['ticket_id']) ?></p>
+                                <p><strong>Description:</strong> <?= htmlspecialchars($t['description']) ?></p>
+                                <p><strong>Class:</strong> <?= htmlspecialchars($t['class_type']) ?></p>
+                                <p><strong>Created:</strong> <?= htmlspecialchars($t['creation_date']) ?></p>
+                                <p><strong>Expires:</strong> <?= htmlspecialchars($t['expiration_date']) ?></p>
+                            </div>
+                            <form method="POST" class="ticket-form">
+                                <input type="hidden" name="assign_ticket_id" value="<?= htmlspecialchars($t['ticket_id']) ?>">
+                                <button type="submit" class="submit small">Assign</button>
+                            </form>
+                        </div>
                     <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
+                </div>
+            <?php endif; ?>
+        </div>
 
-        <h2 class="ticket-heading">Your Tickets</h2>
-        <?php if (empty($studentTickets)): ?>
-            <p class="ticket-message">You have no assigned tickets, nya~ uwu (,,>﹏<,,)👉👈 💤</p>
-                <?php else: ?>
-                    <table class="ticket-table">
-                        <thead>
-                            <tr>
-                                <th>Ticket ID</th>
-                                <th>Description</th>
-                                <th>Class Type</th>
-                                <th>Created</th>
-                                <th>Expires</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($studentTickets as $t): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($t['ticket_id']) ?></td>
-                                    <td><?= htmlspecialchars($t['description']) ?></td>
-                                    <td><?= htmlspecialchars($t['class_type']) ?></td>
-                                    <td><?= htmlspecialchars($t['creation_date']) ?></td>
-                                    <td><?= htmlspecialchars($t['expiration_date']) ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                <?php endif; ?>
+        <!-- Assigned Tickets -->
+        <div class="outer-div">
+            <h2>Your Tickets</h2>
+            <?php if (empty($studentTickets)): ?>
+                <p>You currently have no assigned tickets.</p>
+            <?php else: ?>
+                <div class="ticket-grid">
+                    <?php foreach ($studentTickets as $t): ?>
+                        <div class="ticket-card assigned">
+                            <div class="ticket-info">
+                                <p><strong>ID:</strong> <?= htmlspecialchars($t['ticket_id']) ?></p>
+                                <p><strong>Description:</strong> <?= htmlspecialchars($t['description']) ?></p>
+                                <p><strong>Class:</strong> <?= htmlspecialchars($t['class_type']) ?></p>
+                                <p><strong>Created:</strong> <?= htmlspecialchars($t['creation_date']) ?></p>
+                                <p><strong>Expires:</strong> <?= htmlspecialchars($t['expiration_date']) ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="/home.php"><button type="button">← Back to Dashboard</button></a>
+        </div>
     </div>
+
+    <?php include '../components/footer.php'; ?>
 </body>
 
 </html>

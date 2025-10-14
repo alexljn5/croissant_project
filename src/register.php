@@ -48,6 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   ];
   $gender = isset($_POST['gender']) && isset($genderMap[$_POST['gender']]) ? $genderMap[$_POST['gender']] : 'U';
 
+  $is_teacher = isset($_POST['is_teacher']) ? 1 : 0;
+
   try {
     $checkSql = "SELECT COUNT(*) FROM account WHERE email = :email";
     $checkStmt = $pdo->prepare($checkSql);
@@ -66,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       $sql = "INSERT INTO account 
                     (account_id, creation_time, first_name, last_name, password, phone_number, email, gender, is_teacher, is_admin, address, postal_code) 
                     VALUES 
-                    (:account_id, :creation_time, :first_name, :last_name, :password, :phone_number, :email, :gender, 0, 0, :address, :postal_code)";
+                    (:account_id, :creation_time, :first_name, :last_name, :password, :phone_number, :email, :gender, :is_teacher, 0, :address, :postal_code)";
       $stmt = $pdo->prepare($sql);
       $stmt->execute([
         ':account_id' => $account_id,
@@ -77,6 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ':phone_number' => $phone_number,
         ':email' => $email,
         ':gender' => $gender,
+        ':is_teacher' => $is_teacher,
         ':address' => $address,
         ':postal_code' => $postal_code
       ]);
@@ -87,7 +90,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   }
 }
 ?>
-|
 <!DOCTYPE html>
 <html lang="en">
 
@@ -100,14 +102,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 
 <body>
-  <div class="top">
-    <div class="logo-border">
-      <img src="./img/tickItLogo.png" alt="Tick-IT Logo">
-    </div>
-    <div class="header-container">
-      <h1 class="header-title">Tick-IT</h1>
-    </div>
-  </div>
+  <?php define('INCLUDED', true);
+  include 'components/header.php'; ?>
 
   <div class="page-wrapper">
     <div class="outer-div">
@@ -151,19 +147,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <label>Postal Code:</label>
         <input class="form-input" type="text" name="postal_code" required>
 
+        <label>
+          <input type="checkbox" name="is_teacher"> Register as Teacher
+        </label>
+
         <input id="verzenden" class="submit" type="submit" value="Sign Up">
       </form>
 
       <div class="nav-buttons">
         <a href="index.php"><button type="button">Login</button></a>
-        <a href="register.php"><button type="button">Register</button></a>
       </div>
     </div>
   </div>
 
-  <div class="bodem">
-    <p>© Tick-IT 2025</p>
-  </div>
+  <?php include 'components/footer.php'; ?>
 </body>
 
 </html>
