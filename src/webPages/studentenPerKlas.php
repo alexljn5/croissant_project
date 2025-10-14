@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Database connectie
+// Database connection
 $servername = "localhost";
 $username = "root";
 $password = "password";
@@ -19,78 +19,80 @@ try {
 }
 
 $action = $_POST["action"] ?? "";
-$klasFilter = $_POST["klas"] ?? null;
+$class_filter = $_POST["class_filter"] ?? null;
 
-// Haal alle klassen op
-$sql = "SELECT klasnr, klastype FROM croissantdb.klas ORDER BY klastype";
-$result = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+// Fetch all classes
+$sql = "SELECT class_number, class_type FROM croissantdb.class ORDER BY class_type";
+$classes = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
 $message = "";
 ?>
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Studenten per Klas</title>
-  <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students per Class</title>
+    <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
 </head>
+
 <body>
-  <div class="top">
-    <div class="logo-border">
-      <img src="./img/tickItLogo.png" alt="Tick-IT Logo">
+    <div class="top">
+        <div class="logo-border">
+            <img src="./img/tickItLogo.png" alt="Tick-IT Logo">
+        </div>
+        <div class="header-container">
+            <h1 class="header-title">Tick-IT</h1>
+        </div>
     </div>
-    <div class="header-container">
-      <h1 class="header-title">Tick-IT</h1>
-    </div>
-  </div>
 
-<form method="POST" action="">
-    <input type="hidden" name="action" value="filterStudenten">
-    <label for="klas">Filter op klas:</label>
-    <select name="klas" id="klas">
-        <option value="">-- Kies klas --</option>
-        <?php foreach($result as $row): ?>
-            <option value="<?= htmlspecialchars($row['klasnr']) ?>" 
-                    <?= ($klasFilter == $row['klasnr']) ? 'selected' : '' ?>>
-                <?= htmlspecialchars($row['klastype']) ?>
-            </option>
-        <?php endforeach; ?>
-    </select>
-    <button type="submit">Filter</button>
-</form>
+    <form method="POST" action="">
+        <input type="hidden" name="action" value="filterStudents">
+        <label for="class_filter">Filter by class:</label>
+        <select name="class_filter" id="class_filter">
+            <option value="">-- Select class --</option>
+            <?php foreach ($classes as $row): ?>
+                <option value="<?= htmlspecialchars($row['class_number']) ?>" <?= ($class_filter == $row['class_number']) ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($row['class_type']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+        <button type="submit" class="submit">Filter</button>
+    </form>
 
-<?php
-// Haal studenten op
-$StudentList = "SELECT a.voornaam, a.achternaam, a.email, k.klastype 
-                FROM croissantdb.account a 
-                JOIN croissantdb.account_has_klas ahk ON a.accountnr = ahk.account_accountnr 
-                JOIN croissantdb.klas k ON ahk.klas_klasnr = k.klasnr 
-                WHERE a.isDocent = 0";
-$params = [];
+    <?php
+    // Fetch students
+    $student_query = "SELECT a.first_name, a.last_name, a.email, c.class_type 
+                 FROM croissantdb.account a 
+                 JOIN croissantdb.account_has_class ahc ON a.account_id = ahc.account_id 
+                 JOIN croissantdb.class c ON ahc.class_number = c.class_number 
+                 WHERE a.is_teacher = 0";
+    $params = [];
 
-if ($action === "filterStudenten" && $klasFilter) {
-    $StudentList .= " AND k.klasnr = :klas";
-    $params[':klas'] = $klasFilter;
-}
-
-$stmt = $pdo->prepare($StudentList);
-$stmt->execute($params);
-$students = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-if ($students) {
-    echo "<ul>";
-    foreach ($students as $row) {
-        $naam = htmlspecialchars($row["voornaam"] . " " . $row["achternaam"]);
-        $email = htmlspecialchars($row["email"]);
-        $klas = htmlspecialchars($row["klastype"]);
-        echo "<li style='margin-bottom:10px;'>Naam student: $naam ($email) - Klas: $klas</li>";
+    if ($action === "filterStudents" && $class_filter) {
+        $student_query .= " AND c.class_number = :class_number";
+        $params[':class_number'] = $class_filter;
     }
-    echo "</ul>";
-} else {
-    echo "<p>Geen studenten gevonden.</p>";
-}
-?>
+
+    $stmt = $pdo->prepare($student_query);
+    $stmt->execute($params);
+    $student_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($student_list) {
+        echo "<ul>";
+        foreach ($student_list as $row) {
+            $name = htmlspecialchars($row["first_name"] . " " . $row["last_name"]);
+            $email = htmlspecialchars($row["email"]);
+            $class_type = htmlspecialchars($row["class_type"]);
+            echo "<li style='margin-bottom:10px;'>Student name: $name ($email) - Class: $class_type</li>";
+        }
+        echo "</ul>";
+    } else {
+        echo "<p>No students found.</p>";
+    }
+    ?>
 
 </body>
+
 </html>
