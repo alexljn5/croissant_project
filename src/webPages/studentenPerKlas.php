@@ -91,6 +91,61 @@ $message = "";
     } else {
         echo "<p>No students found.</p>";
     }
+
+    if ($action === "viewTickets" && !empty($_POST['student_id'])) {
+    $student_id = $_POST['student_id'];
+
+    // Huidige tickets
+    $stmt = $pdo->prepare("
+        SELECT st.description, st.expiration_date, c.class_type
+        FROM croissantdb.student_ticket st
+        JOIN croissantdb.account_has_student_ticket ahst
+            ON st.ticket_id = ahst.student_ticket_id
+        JOIN croissantdb.class c
+            ON st.class_number = c.class_number
+        WHERE ahst.account_id = :student_id
+          AND st.expiration_date >= CURDATE()
+    ");
+    $stmt->execute([':student_id' => $student_id]);
+    $current_tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo "<h3>Huidige tickets:</h3>";
+    if ($current_tickets) {
+        echo "<ul>";
+        foreach ($current_tickets as $t) {
+            echo "<li>" . htmlspecialchars($t['description']) . " - Class: " . htmlspecialchars($t['class_type']) . " - Exp: " . htmlspecialchars($t['expiration_date']) . "</li>";
+        }
+        echo "</ul>";
+    } else {
+        echo "<p>Geen huidige tickets.</p>";
+    }
+
+    // Voltooide tickets
+    $stmt = $pdo->prepare("
+        SELECT st.description, st.expiration_date, c.class_type
+        FROM croissantdb.student_ticket st
+        JOIN croissantdb.account_has_student_ticket ahst
+            ON st.ticket_id = ahst.student_ticket_id
+        JOIN croissantdb.class c
+            ON st.class_number = c.class_number
+        WHERE ahst.account_id = :student_id
+          AND st.expiration_date < CURDATE()
+    ");
+    $stmt->execute([':student_id' => $student_id]);
+    $completed_tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo "<h3>Voltooide tickets:</h3>";
+    if ($completed_tickets) {
+        echo "<ul>";
+        foreach ($completed_tickets as $t) {
+            echo "<li>" . htmlspecialchars($t['description']) . " - Class: " . htmlspecialchars($t['class_type']) . " - Exp: " . htmlspecialchars($t['expiration_date']) . "</li>";
+        }
+        echo "</ul>";
+    } else {
+        echo "<p>Geen voltooide tickets.</p>";
+    }
+}
+
     ?>
 
 </body>
