@@ -62,3 +62,10 @@ de aanmaaksdatum is ook zichtbaar zodat je weet vanaf en ongeveer tot wanneer je
 
 ghgfgn
 ---
+
+-- jordy
+
+hzo is klas vervangen met class? class wordt door maar twee php files gebruikt en dat zijn ticketPage en ticketCreation
+elke andere file gebruikt nog steeds klas dus de andere files zijn gebroken
+
+---
