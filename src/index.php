@@ -1,53 +1,69 @@
 <?php
 session_start();
 
-// Database credentials (hardcoded for now, but we'll secure them)
-$servername = "db"; // Matches docker-compose.yml
+// Debug flag: set to true to accept plain text passwords (for testing)
+define('DEBUG_PLAINTEXT_PASSWORDS', true);
+
+// Database credentials
+$servername = "db";
 $username = "root";
-$password = "password"; // Must match MYSQL_ROOT_PASSWORD
+$password = "password";
 $dbname = "croissantdb";
 
 try {
-  $dsn = "mysql:host=$servername;dbname=$dbname;charset=utf8mb4";
-  $pdo = new PDO($dsn, $username, $password);
-  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  // Cheese sneers, "Hmph, database tamed!"
+    $dsn = "mysql:host=$servername;dbname=$dbname;charset=utf8mb4";
+    $pdo = new PDO($dsn, $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-  //if any of you teammates care to see the bunny reference here, come up to me with the die message changed and I will give you a euro.
-  die("Database error, you silly bun-bun Creamy rabbit!: " . htmlspecialchars($e->getMessage()) . " (Code: " . $e->getCode() . ")");
+    die("Database error, you silly bun-bun Creamy rabbit!: " . htmlspecialchars($e->getMessage()) . " (Code: " . $e->getCode() . ")");
 }
 
 $message = "";
 
 // Handle login
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  $email = isset($_POST['email']) ? trim($_POST['email']) : '';
-  $password = isset($_POST['password']) ? trim($_POST['password']) : '';
+    $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+    $passwordInput = isset($_POST['password']) ? trim($_POST['password']) : '';
 
-  if (empty($email) || empty($password)) {
-    $message = "Please fill in all fields.";
-  } else {
-    try {
-      $stmt = $pdo->prepare("SELECT account_id, email, password, is_teacher, is_admin FROM account WHERE email = ?");
-      $stmt->execute([$email]);
-      $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (empty($email) || empty($passwordInput)) {
+        $message = "Please fill in all fields.";
+    } else {
+        try {
+            $stmt = $pdo->prepare("SELECT account_id, email, password, is_teacher, is_admin FROM account WHERE email = ?");
+            $stmt->execute([$email]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-      if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['account_id'] = $user['account_id'];
-        $_SESSION['email'] = $user['email'];
-        $_SESSION['is_teacher'] = $user['is_teacher'];
-        $_SESSION['is_admin'] = $user['is_admin'];
-        $message = "Login successful! Redirecting...";
-        header("Refresh: 2; url=/home.php");
-      } else {
-        $message = "Invalid email or password.";
-      }
-    } catch (PDOException $e) {
-      $message = "Error: " . htmlspecialchars($e->getMessage());
+            if ($user) {
+                $passwordMatches = false;
+
+                if (DEBUG_PLAINTEXT_PASSWORDS) {
+                    // Bunny debug mode: accept plain text
+                    $passwordMatches = ($passwordInput === $user['password']);
+                } else {
+                    // Production: check hashed password
+                    $passwordMatches = password_verify($passwordInput, $user['password']);
+                }
+
+                if ($passwordMatches) {
+                    $_SESSION['account_id'] = $user['account_id'];
+                    $_SESSION['email'] = $user['email'];
+                    $_SESSION['is_teacher'] = $user['is_teacher'];
+                    $_SESSION['is_admin'] = $user['is_admin'];
+                    $message = "Login successful! Redirecting...";
+                    header("Refresh: 2; url=/home.php");
+                } else {
+                    $message = "Invalid email or password.";
+                }
+            } else {
+                $message = "Invalid email or password.";
+            }
+        } catch (PDOException $e) {
+            $message = "Error: " . htmlspecialchars($e->getMessage());
+        }
     }
-  }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
