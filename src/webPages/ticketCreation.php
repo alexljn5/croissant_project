@@ -1,6 +1,12 @@
 <?php
 session_start();
 
+// Check if user is logged in
+if (!isset($_SESSION['account_id'])) {
+    header('Location: /index.php');
+    exit();
+}
+
 // Database connection
 $servername = "db"; // Matches MySQL service name in docker-compose.yml
 $username = "root";
@@ -19,25 +25,17 @@ try {
         } catch (PDOException $e) {
             $retries--;
             if ($retries == 0) {
-                die("<p style='color:red;'>Database connection failed after retries: " . htmlspecialchars($e->getMessage()) . " (Code: " . $e->getCode() . ")</p>");
+                throw $e; // Re-throw to handle in outer catch
             }
             sleep($retryInterval); // Wait before retrying
         }
     }
 
-    // Insert test teacher account
-    $stmt = $pdo->prepare("INSERT IGNORE INTO account (account_id, creation_time, first_name, last_name, password, phone_number, email, gender, is_teacher, is_admin, address, postal_code) 
-                          VALUES (1, CURRENT_TIME(), 'Test', 'Teacher', 'test123', '0612345678', 'test@test.nl', 'M', 1, 0, 'Test Street 1', '1234AB')");
-    $stmt->execute();
-} catch (PDOException $e) {
-    die("<p style='color:red;'>Database connection failed: " . htmlspecialchars($e->getMessage()) . "</p>");
-}
-
-try {
+    // Fetch classes for dropdown
     $stmt = $pdo->query("SELECT class_number, class_type FROM class ORDER BY class_type");
     $classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    die("<p style='color:red;'>Error fetching classes: " . htmlspecialchars($e->getMessage()) . "</p>");
+    die("<p class='ongeldig'>Database connection failed: " . htmlspecialchars($e->getMessage()) . "</p>");
 }
 
 $message = "";
@@ -48,39 +46,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = $_POST['description'] ?? '';
 
     if (empty($class_number) || empty($expiration_date) || empty($description)) {
-        $message = "<p style='color:red;'>Please fill in all fields</p>";
+        $message = "<p class='ongeldig'>Please fill in all fields</p>";
     } else {
         try {
             $stmt = $pdo->prepare("INSERT INTO student_ticket (expiration_date, creation_date, description, class_number) VALUES (?, CURDATE(), ?, ?)");
             $stmt->execute([$expiration_date, $description, $class_number]);
             $ticket_id = $pdo->lastInsertId();
 
-            $message = "<p style='color:green;'>Ticket successfully created! Ticket ID: " . htmlspecialchars($ticket_id) . "</p>";
+            $message = "<p class='geldig'>Ticket successfully created! Ticket ID: " . htmlspecialchars($ticket_id) . "</p>";
         } catch (PDOException $e) {
-            $message = "<p style='color:red;'>Error creating ticket: " . htmlspecialchars($e->getMessage()) . "</p>";
+            $message = "<p class='ongeldig'>Error creating ticket: " . htmlspecialchars($e->getMessage()) . "</p>";
         }
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Ticket</title>
+    <title>Student Tickets - Tick-IT</title>
+    <link rel="stylesheet" href="/styles.css?v=<?php echo time(); ?>">
 </head>
 
 <body>
-    <h1>Create New Ticket</h1>
+    <?php define('INCLUDED', true);
+    include '../components/header.php'; ?>
 
-    <?php echo $message; ?>
+    <div class="main-content">
+        <h1 class="page-title">Create New Student Ticket</h1>
 
-    <form method="post" action="">
-        <p>
-            <label for="class_number">Select Class:</label><br>
-            <select name="class_number" id="class_number" required>
+        <?php echo $message; ?>
+
+        <form method="post" action="" class="outer-div">
+            <label for="class_number">Select Class:</label>
+            <select class="form-input" name="class_number" id="class_number" required>
                 <option value="">-- Choose a class --</option>
                 <?php foreach ($classes as $class): ?>
                     <option value="<?php echo htmlspecialchars($class['class_number']); ?>">
@@ -88,26 +89,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </option>
                 <?php endforeach; ?>
             </select>
-        </p>
 
-        <p>
-            <label for="expiration_date">Expiration Date:</label><br>
-            <input type="date" id="expiration_date" name="expiration_date" required>
-        </p>
+            <label for="expiration_date">Expiration Date:</label>
+            <input class="form-input" type="date" id="expiration_date" name="expiration_date" required>
 
-        <p>
-            <label for="description">Assignment Description:</label><br>
-            <textarea id="description" name="description" rows="4" cols="50" required></textarea>
-        </p>
+            <label for="description">Assignment Description:</label>
+            <textarea class="form-input" id="description" name="description" rows="4" required
+                placeholder="Enter ticket description..."></textarea>
 
-        <p>
-            <button type="submit">Create Ticket</button>
-        </p>
-    </form>
-
-    <p>
-        <a href="index.php">Back to Dashboard</a>
-    </p>
+            <div class="nav-buttons">
+                <button class="submit" type="submit">Create Ticket</button>
+                <a href="/home.php"><button type="button">Back to Dashboard</button></a>
+            </div>
+        </form>
+    </div>
+    <?php include '../components/footer.php'; ?>
 </body>
 
 </html>

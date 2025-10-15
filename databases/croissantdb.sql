@@ -8,6 +8,12 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
+-- Drop existing schemas to regenerate
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `school_sys`;
+DROP SCHEMA IF EXISTS `croissantdb`;
+
+-- -----------------------------------------------------
 -- Schema croissantdb
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `croissantdb` DEFAULT CHARACTER SET utf8;
@@ -68,8 +74,17 @@ CREATE TABLE IF NOT EXISTS `croissantdb`.`teacher_ticket` (
   `teacher_ticket_id` INT NOT NULL AUTO_INCREMENT,
   `expiration_date` DATE NOT NULL,
   `creation_date` DATE NOT NULL,
-  PRIMARY KEY (`teacher_ticket_id`)
+  `description` TEXT NOT NULL COMMENT 'Stores the teacher assignment/description',
+  `class_number` INT NOT NULL,
+  PRIMARY KEY (`teacher_ticket_id`),
+  INDEX `fk_teacher_ticket_class_idx` (`class_number` ASC) VISIBLE,
+  CONSTRAINT `fk_teacher_ticket_class`
+    FOREIGN KEY (`class_number`)
+    REFERENCES `croissantdb`.`class` (`class_number`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE
 ) ENGINE=InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table: teacher_has_student_ticket
