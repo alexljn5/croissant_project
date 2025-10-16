@@ -434,6 +434,69 @@ p {
   margin: 0;
 }
 
+/* --- Class Grid Layout --- */
+.class-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5rem 0.3rem;
+  scroll-behavior: smooth;
+  max-height: 350px;
+  max-width: 100%;
+}
+
+.class-grid::-webkit-scrollbar {
+  height: 10px;
+}
+
+.class-grid::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 5px;
+}
+
+.class-grid::-webkit-scrollbar-thumb:hover {
+  background-color: #666;
+}
+
+/* --- Class Card Styling --- */
+.class-card {
+  flex: 0 0 300px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  border: 1px solid #dfe2ec;
+}
+
+.class-card:hover {
+  transform: translateY(-5px);
+}
+
+.class-card .ticket-info p {
+  margin: 0.3rem 0;
+  color: #282828;
+  font-size: 0.9rem;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 600px) {
+  .class-grid {
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 400px;
+  }
+
+  .class-card {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+
 /* Form centering and responsiveness */
 form:not(.outer-div) {
   max-width: 400px;
@@ -465,6 +528,28 @@ form:not(.outer-div) .submit {
 textarea.form-input {
   height: auto;
   min-height: 100px;
+}
+
+/* --- Multi-Select Dropdown Styling --- */
+.form-input.multi-select {
+  height: 100px;
+  /* Taller to show multiple options */
+  overflow-y: auto;
+  /* Scrollable if many classes */
+  background-color: #ededed;
+  border: 1px outset;
+  border-radius: 1.5px;
+  padding: 5px;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+/* Ensure it looks good on mobile */
+@media (max-width: 600px) {
+  .form-input.multi-select {
+    height: 80px;
+    /* Slightly shorter on mobile */
+  }
 }
 
 /*----------------------------------*/
