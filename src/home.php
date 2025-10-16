@@ -53,7 +53,7 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
                     <div class="dashboard-icon">
                     <img src="img/penpapier.png"
                     alt="Create ticket"
-                        style="width:20px; height:40px; filter:grayscale(1.2);" />
+                        style="width:40px; height:40px; filter:invert(0.8);" />
                         </div>
                     <h3>View Student Tickets</h3>
                     <p>View and manage student tickets</p>
@@ -66,7 +66,7 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
                     <div class="dashboard-icon">
                     <img src="img/penpapier.png"
                     alt="Create ticket"
-                        style="width:20px; height:40px; filter:grayscale(1.2);" />
+                        style="width:40px; height:40px; filter:invert(0.8);" />
                         </div>
                         <h3>Create Teacher Ticket</h3>
                         <p>Create new teacher tickets</p>
@@ -77,7 +77,7 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
                     <div class="dashboard-icon">
                     <img src="img/eyes.png"
                     alt="Create ticket"
-                        style="width:20px; height:40px; filter:grayscale(1.2);" />
+                        style="width:35px; height:35px; filter:grayscale(1.2);" />
                         </div>
                         <h3>View Teacher Tickets</h3>
                         <p>View and manage teacher tickets</p>
@@ -85,7 +85,11 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
                 </div>
                 <div class="dashboard-item">
                     <a href="webPages/classLink.php">
-                        <div class="dashboard-icon">📚</div>
+                    <div class="dashboard-icon">
+                    <img src="img/eyes.png"
+                    alt="Class Link"
+                        style="width:35px; height:35px; filter:grayscale(1.2);" />
+                        </div>
                         <h3>Manage Class Links</h3>
                         <p>Link students to classes</p>
                     </a>
@@ -109,7 +113,7 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
                     <div class="dashboard-icon">
                     <img src="img/penpapier.png"
                     alt="Create ticket"
-                        style="width:40px; height:40px; filter:grayscale(1.2);" />
+                        style="width:60px; height:60px; filter:grayscale(1.2);" />
                         </div>
                         <h3>Manage Classes</h3>
                         <p>Add or remove classes</p>
@@ -122,7 +126,7 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
                     <div class="dashboard-icon">
                     <img src="img/guy (2).png"
                     alt="Create ticket"
-                        style="width:40px; height:60px; filter:grayscale(1.2);" />
+                        style="width:40px; height:50px; filter:grayscale(1.2);" />
                         </div>
                     <h3>Class Overview</h3>
                     <p>View students per class</p>
