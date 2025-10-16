@@ -83,6 +83,13 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
                         <p>View and manage teacher tickets</p>
                     </a>
                 </div>
+                <div class="dashboard-item">
+                    <a href="webPages/classLink.php">
+                        <div class="dashboard-icon">📚</div>
+                        <h3>Manage Class Links</h3>
+                        <p>Link students to classes</p>
+                    </a>
+                </div>
             <?php endif; ?>
 
             <?php if ($isAdmin): ?>
