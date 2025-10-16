@@ -2,7 +2,7 @@
 session_start();
 
 // Debug flag: set to true to accept plain text passwords (for testing)
-define('DEBUG_PLAINTEXT_PASSWORDS', true);
+define('DEBUG_PLAINTEXT_PASSWORDS', false);
 
 // Database credentials
 $servername = "db";
