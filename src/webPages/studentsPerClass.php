@@ -92,9 +92,11 @@ include '../components/header.php';
         <!-- Tickets View Mode -->
         <div class="tickets-section">
             <div class="nav-buttons">
-                <a href="?<?= $classFilter ? 'class_filter=' . urlencode($classFilter) : '' ?>"><button type="button" class="back-to-students">← Back to Students</button></a>
+                <a href="?<?= $classFilter ? 'class_filter=' . urlencode($classFilter) : '' ?>">
+                    <button type="button" class="submit">← Back to Students</button>
+                </a>
             </div>
-            
+
             <h2>Tickets for: <?= htmlspecialchars($selectedStudent['first_name'] . ' ' . $selectedStudent['last_name']) ?></h2>
             <p><strong>Email:</strong> <?= htmlspecialchars($selectedStudent['email']) ?></p>
             <p><strong>Class:</strong> <?= htmlspecialchars($selectedStudent['class_type']) ?></p>
@@ -127,24 +129,29 @@ include '../components/header.php';
         </div>
     <?php else: ?>
         <!-- Students List View -->
-        <!-- Filter Form -->
-        <form method="POST" action="" class="filter-form">
-            <input type="hidden" name="action" value="filterStudents">
-            <label for="class_filter">Filter by class:</label>
-            <select name="class_filter" id="class_filter">
-                <option value="">-- All Classes --</option>
-                <?php foreach ($classes as $class): ?>
-                    <option value="<?= htmlspecialchars($class['class_number']) ?>" <?= ($classFilter == $class['class_number']) ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($class['class_type']) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-            <button type="submit" class="submit">Filter</button>
+        <!-- Filter Form + Back Button Row -->
+        <div class="filter-row">
+            <form method="POST" action="" class="filter-form" style="display:flex; align-items:center; gap:10px;">
+                <input type="hidden" name="action" value="filterStudents">
+                <label for="class_filter">Filter by class:</label>
+                <select name="class_filter" id="class_filter">
+                    <option value="">-- All Classes --</option>
+                    <?php foreach ($classes as $class): ?>
+                        <option value="<?= htmlspecialchars($class['class_number']) ?>" <?= ($classFilter == $class['class_number']) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($class['class_type']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+                <button type="submit" class="submit">Filter</button>
+            </form>
+
+            
+
             <?php if ($classFilter): ?>
                 <a href="?" class="clear-filter" onclick="return confirm('Clear filter?')">Clear Filter</a>
             <?php endif; ?>
-        </form>
-
+        </div>
+<a href="/home.php"><button type="button" class="submit">Back to Dashboard</button></a>
         <!-- Students Grid -->
         <?php if ($studentList): ?>
             <div class="dashboard-grid">
@@ -174,15 +181,6 @@ include '../components/header.php';
             </div>
         <?php endif; ?>
     <?php endif; ?>
-
-    <?php if (!$showTickets): ?>
-        <div class="nav-buttons">
-            <a href="/home.php"><button type="button">Back to Dashboard</button></a>
-        </div>
-    <?php endif; ?>
-      <div class="nav-buttons">
-      <a href="/home.php"><button type="button">Back to Dashboard</button></a>
-    </div>
 </div>
 
 <?php include '../components/footer.php'; ?>
