@@ -166,6 +166,410 @@ input {
   animation: float 6s ease-in-out infinite alternate;
 }
 
+/*----------------------------------*/
+/* Cream's Students Per Class Fixes! 🐰✨ */
+/*----------------------------------*/
+
+/* Filter Form - Matching your color scheme */
+.filter-form {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  border: 1px solid #dee2e6;
+  box-shadow: 0px 5px 10px 1.5px rgba(43, 43, 43, 0.1);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.filter-form label {
+  font-weight: 500;
+  color: #282828;
+  display: block;
+  margin-bottom: 10px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.filter-form select {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  border: outset 1px;
+  border-radius: 6px;
+  background-color: #ededed;
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+
+.filter-form .submit {
+  width: auto;
+  padding: 12px 25px;
+  background-color: #cb7e8f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0px 5px 10px 1.5px rgba(43, 43, 43, 0.1);
+}
+
+.filter-form .submit:hover {
+  background-color: #ea91a5;
+  transform: translateY(-2px);
+}
+
+/* Enhanced Dashboard Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-item {
+  background: #fff;
+  border-radius: 8px;
+  padding: 25px;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(43, 43, 43, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid #e9ecef;
+}
+
+.dashboard-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(43, 43, 43, 0.15);
+}
+
+.dashboard-item.selected {
+  border-color: #cb7e8f;
+  background: linear-gradient(135deg, #fff 0%, #fdf2f5 100%);
+  box-shadow: 0 4px 15px rgba(203, 126, 143, 0.2);
+}
+
+.dashboard-item h3 {
+  color: #282828;
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.dashboard-item p {
+  margin: 10px 0;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.dashboard-item p strong {
+  color: #282828;
+}
+
+/* Submit button in dashboard items */
+.dashboard-item .submit.small {
+  width: 100%;
+  padding: 12px;
+  background-color: #cb7e8f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-top: 15px;
+  box-shadow: 0px 3px 8px rgba(43, 43, 43, 0.1);
+  transition: all 0.3s ease;
+}
+
+.dashboard-item .submit.small:hover {
+  background-color: #ea91a5;
+  transform: translateY(-2px);
+  box-shadow: 0px 5px 15px rgba(43, 43, 43, 0.15);
+}
+
+/* Tickets Section */
+.tickets-section {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 30px;
+  margin: 20px auto;
+  max-width: 1000px;
+  box-shadow: 0px 5px 15px rgba(43, 43, 43, 0.1);
+  border: 1px solid #e9ecef;
+}
+
+.tickets-section h2 {
+  color: #282828;
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.tickets-section p {
+  color: #555;
+  margin: 8px 0;
+  font-size: 1rem;
+}
+
+.tickets-section p strong {
+  color: #282828;
+}
+
+/* Scrollable Ticket Container */
+.ticket-container-vertical {
+  max-height: 500px;
+  overflow-y: auto;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  background: #fafafa;
+  padding: 15px;
+  margin: 20px 0;
+}
+
+.ticket-container-vertical::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ticket-container-vertical::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.ticket-container-vertical::-webkit-scrollbar-thumb {
+  background: #cb7e8f;
+  border-radius: 4px;
+}
+
+.ticket-container-vertical::-webkit-scrollbar-thumb:hover {
+  background: #ea91a5;
+}
+
+/* Ticket Grid */
+.ticket-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  min-height: 100px;
+}
+
+.ticket-card {
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(43, 43, 43, 0.05);
+  transition: all 0.3s ease;
+}
+
+.ticket-card:hover {
+  box-shadow: 0 4px 15px rgba(43, 43, 43, 0.1);
+  transform: translateY(-2px);
+}
+
+.ticket-card.assigned {
+  border-left: 4px solid #39ac52;
+  background: linear-gradient(135deg, #f8fff9 0%, #fff 100%);
+}
+
+.ticket-card.expired {
+  border-left: 4px solid #dc3545;
+  background: linear-gradient(135deg, #fff5f5 0%, #fff 100%);
+  opacity: 0.8;
+}
+
+.ticket-info p {
+  margin: 12px 0;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.ticket-info strong {
+  color: #282828;
+  font-weight: 600;
+}
+
+.ticket-info p:last-child {
+  margin-bottom: 0;
+}
+
+/* Expired badge */
+.ticket-card.expired .ticket-info p:last-child {
+  color: #dc3545;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* Navigation Buttons - Enhanced */
+.nav-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 30px 0;
+}
+
+.nav-buttons button,
+.nav-buttons a button {
+  border: none;
+  padding: 12px 25px;
+  border-radius: 6px;
+  background-color: #cb7e8f;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0px 5px 10px 1.5px rgba(43, 43, 43, 0.1);
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
+  min-width: 160px;
+  text-align: center;
+}
+
+.nav-buttons button:hover,
+.nav-buttons a button:hover {
+  background-color: #ea91a5;
+  transform: translateY(-2px);
+  box-shadow: 0px 8px 20px rgba(43, 43, 43, 0.15);
+}
+
+/* Back to students special button */
+.back-to-students {
+  background-color: #3d538e !important;
+}
+
+.back-to-students:hover {
+  background-color: #2c406d !important;
+}
+
+/* Clear filter link */
+.clear-filter {
+  color: #dc3545;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 15px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.clear-filter:hover {
+  background-color: #f8d7da;
+  text-decoration: underline;
+}
+
+/* Empty States */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+  font-style: italic;
+  background: #fff;
+  border-radius: 8px;
+  border: 2px dashed #dee2e6;
+  margin: 40px auto;
+  max-width: 600px;
+}
+
+.empty-state p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Page Title Enhancement */
+.page-title {
+  color: #282828;
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin: 30px 0 40px 0;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Main Content Enhancement */
+.main-content {
+  flex: 1;
+  background-color: #dfe2ec;
+  min-height: calc(100vh - 120px);
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 10px;
+  }
+  
+  .ticket-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .filter-form {
+    padding: 20px;
+    margin: 10px;
+  }
+  
+  .tickets-section {
+    padding: 20px;
+    margin: 10px;
+  }
+  
+  .nav-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .nav-buttons button,
+  .nav-buttons a button {
+    min-width: 200px;
+  }
+  
+  .page-title {
+    font-size: 1.8rem;
+    margin: 20px 0 30px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-item,
+  .ticket-card {
+    padding: 15px;
+  }
+  
+  .tickets-section {
+    padding: 15px;
+  }
+  
+  .filter-form {
+    padding: 15px;
+  }
+}
+
+/* Ensure footer stays at bottom */
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}
+
 @keyframes float {
   0% {
     transform: translateY(0px) translateX(0px);
