@@ -73,116 +73,120 @@ if ($showTickets) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Students per Class</title>
     <link rel="stylesheet" href="/styles.css?v=<?= time() ?>">
 </head>
+
 <body>
-<?php 
-define('INCLUDED', true);
-include '../components/header.php'; 
-?>
+    <?php
+    define('INCLUDED', true);
+    include '../components/header.php';
+    ?>
 
-<div class="main-content">
-    <h1 class="page-title">Students per Class</h1>
+    <div class="main-content">
+        <h1 class="page-title">Students per Class</h1>
 
-    <?php if ($showTickets && $selectedStudent): ?>
-        <!-- Tickets View Mode -->
-        <div class="tickets-section">
-            <div class="nav-buttons">
-                <a href="?<?= $classFilter ? 'class_filter=' . urlencode($classFilter) : '' ?>">
-                    <button type="button" class="submit">← Back to Students</button>
-                </a>
-            </div>
+        <?php if ($showTickets && $selectedStudent): ?>
+            <!-- Tickets View Mode -->
+            <div class="tickets-section">
+                <div class="nav-buttons">
+                    <a href="?<?= $classFilter ? 'class_filter=' . urlencode($classFilter) : '' ?>">
+                        <button type="button" class="submit">← Back to Students</button>
+                    </a>
+                </div>
 
-            <h2>Tickets for: <?= htmlspecialchars($selectedStudent['first_name'] . ' ' . $selectedStudent['last_name']) ?></h2>
-            <p><strong>Email:</strong> <?= htmlspecialchars($selectedStudent['email']) ?></p>
-            <p><strong>Class:</strong> <?= htmlspecialchars($selectedStudent['class_type']) ?></p>
-            
-            <div class="ticket-container-vertical">
-                <div class="ticket-grid">
-                    <?php if (isset($tickets) && $tickets): ?>
-                        <?php foreach ($tickets as $ticket): 
-                            $isExpired = ($ticket['expiration_date'] < date('Y-m-d'));
-                            $statusClass = $isExpired ? 'expired' : 'assigned';
-                        ?>
-                            <div class="ticket-card <?= $statusClass ?>">
-                                <div class="ticket-info">
-                                    <p><strong>Description:</strong> <?= htmlspecialchars($ticket['description']) ?></p>
-                                    <p><strong>Class:</strong> <?= htmlspecialchars($ticket['class_type']) ?></p>
-                                    <p><strong>Expires:</strong> <?= htmlspecialchars($ticket['expiration_date']) ?></p>
-                                    <?php if ($isExpired): ?>
-                                        <p style="color: #dc3545; font-weight: bold;">Expired</p>
-                                    <?php endif; ?>
+                <h2>Tickets for:
+                    <?= htmlspecialchars($selectedStudent['first_name'] . ' ' . $selectedStudent['last_name']) ?></h2>
+                <p><strong>Email:</strong> <?= htmlspecialchars($selectedStudent['email']) ?></p>
+                <p><strong>Class:</strong> <?= htmlspecialchars($selectedStudent['class_type']) ?></p>
+
+                <div class="ticket-container-vertical">
+                    <div class="ticket-grid">
+                        <?php if (isset($tickets) && $tickets): ?>
+                            <?php foreach ($tickets as $ticket):
+                                $isExpired = ($ticket['expiration_date'] < date('Y-m-d'));
+                                $statusClass = $isExpired ? 'expired' : 'assigned';
+                                ?>
+                                <div class="ticket-card <?= $statusClass ?>">
+                                    <div class="ticket-info">
+                                        <p><strong>Description:</strong> <?= htmlspecialchars($ticket['description']) ?></p>
+                                        <p><strong>Class:</strong> <?= htmlspecialchars($ticket['class_type']) ?></p>
+                                        <p><strong>Expires:</strong> <?= htmlspecialchars($ticket['expiration_date']) ?></p>
+                                        <?php if ($isExpired): ?>
+                                            <p style="color: #dc3545; font-weight: bold;">Expired</p>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="empty-state">
+                                <p>No tickets found for this student. 🐰</p>
                             </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <div class="empty-state">
-                            <p>No tickets found for this student. 🐰</p>
-                        </div>
-                    <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
-            </div>
-        </div>
-    <?php else: ?>
-        <!-- Students List View -->
-        <!-- Filter Form + Back Button Row -->
-        <div class="filter-row">
-            <form method="POST" action="" class="filter-form" style="display:flex; align-items:center; gap:10px;">
-                <input type="hidden" name="action" value="filterStudents">
-                <label for="class_filter">Filter by class:</label>
-                <select name="class_filter" id="class_filter">
-                    <option value="">-- All Classes --</option>
-                    <?php foreach ($classes as $class): ?>
-                        <option value="<?= htmlspecialchars($class['class_number']) ?>" <?= ($classFilter == $class['class_number']) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($class['class_type']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-                <button type="submit" class="submit">Filter</button>
-            </form>
-
-            
-
-            <?php if ($classFilter): ?>
-                <a href="?" class="clear-filter" onclick="return confirm('Clear filter?')">Clear Filter</a>
-            <?php endif; ?>
-        </div>
-<a href="/home.php"><button type="button" class="submit">Back to Dashboard</button></a>
-        <!-- Students Grid -->
-        <?php if ($studentList): ?>
-            <div class="dashboard-grid">
-            <?php foreach ($studentList as $student): 
-                $fullName = htmlspecialchars($student["first_name"] . " " . $student["last_name"]);
-                $email = htmlspecialchars($student["email"]);
-                $classType = htmlspecialchars($student["class_type"]);
-                $id = $student["account_id"];
-            ?>
-                <div class="dashboard-item">
-                    <h3><?= $fullName ?></h3>
-                    <p><strong>Email:</strong> <?= $email ?></p>
-                    <p><strong>Class:</strong> <?= $classType ?></p>
-                    <form method="POST" action="" style="margin-top: 15px;">
-                        <input type="hidden" name="action" value="viewTickets">
-                        <input type="hidden" name="student_id" value="<?= $id ?>">
-                        <input type="hidden" name="class_filter" value="<?= htmlspecialchars($classFilter ?? '') ?>">
-                        <button type="submit" class="submit small">View Tickets</button>
-                    </form>
-                    
-                </div>
-            <?php endforeach; ?>
             </div>
         <?php else: ?>
-            <div class="empty-state">
-                <p>No students found. Try a different filter! 🐰</p>
-            </div>
-        <?php endif; ?>
-    <?php endif; ?>
-</div>
+            <!-- Students List View -->
+            <!-- Filter Form + Back Button Row -->
+            <div class="filter-row">
+                <form method="POST" action="" class="filter-form" style="display:flex; align-items:center; gap:10px;">
+                    <input type="hidden" name="action" value="filterStudents">
+                    <label for="class_filter">Filter by class:</label>
+                    <select name="class_filter" id="class_filter">
+                        <option value="">-- All Classes --</option>
+                        <?php foreach ($classes as $class): ?>
+                            <option value="<?= htmlspecialchars($class['class_number']) ?>"
+                                <?= ($classFilter == $class['class_number']) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($class['class_type']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <button type="submit" class="submit">Filter</button>
+                </form>
 
-<?php include '../components/footer.php'; ?>
+                <?php if ($classFilter): ?>
+                    <a href="?" class="clear-filter" onclick="return confirm('Clear filter?')">Clear Filter</a>
+                <?php endif; ?>
+            </div>
+            <a href="/home.php"><button type="button" class="submit">Back to Dashboard</button></a>
+            <!-- Students Grid -->
+            <?php if ($studentList): ?>
+                <div class="student-grid-container">
+                    <div class="dashboard-grid">
+                        <?php foreach ($studentList as $student):
+                            $fullName = htmlspecialchars($student["first_name"] . " " . $student["last_name"]);
+                            $email = htmlspecialchars($student["email"]);
+                            $classType = htmlspecialchars($student["class_type"]);
+                            $id = $student["account_id"];
+                            ?>
+                            <div class="dashboard-item">
+                                <h3><?= $fullName ?></h3>
+                                <p><strong>Email:</strong> <?= $email ?></p>
+                                <p><strong>Class:</strong> <?= $classType ?></p>
+                                <form method="POST" action="" style="margin-top: 15px;">
+                                    <input type="hidden" name="action" value="viewTickets">
+                                    <input type="hidden" name="student_id" value="<?= $id ?>">
+                                    <input type="hidden" name="class_filter" value="<?= htmlspecialchars($classFilter ?? '') ?>">
+                                    <button type="submit" class="submit small">View Tickets</button>
+                                </form>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php else: ?>
+                <div class="empty-state">
+                    <p>No students found. Try a different filter! 🐰</p>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+    </div>
+
+    <?php include '../components/footer.php'; ?>
 </body>
+
 </html>
