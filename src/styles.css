@@ -687,6 +687,61 @@ body {
   margin-bottom: 10px;
 }
 
+/* Dashboard Icon Styles */
+.dashboard-icon img.create-student-ticket {
+    width: 20px;
+    height: 40px;
+    filter: grayscale(1.2);
+}
+
+.dashboard-icon img.view-student-ticket {
+    width: 40px;
+    height: 40px;
+    filter: invert(0.8);
+}
+
+.dashboard-icon img.create-teacher-ticket {
+    width: 40px;
+    height: 40px;
+    filter: invert(0.8);
+}
+
+.dashboard-icon img.view-teacher-ticket {
+    width: 35px;
+    height: 35px;
+    filter: grayscale(1.2);
+}
+
+.dashboard-icon img.manage-class-link {
+    width: 35px;
+    height: 35px;
+    filter: grayscale(1.2);
+}
+
+.dashboard-icon img.admin-panel {
+    width: 20px;
+    height: 40px;
+    filter: grayscale(1.2);
+}
+
+.dashboard-icon img.manage-classes {
+    width: 60px;
+    height: 60px;
+    filter: grayscale(1.2);
+}
+
+.dashboard-icon img.class-overview {
+    width: 40px;
+    height: 50px;
+    filter: grayscale(1.2);
+}
+
+.dashboard-icon img.logout {
+    width: 30px;
+    height: 45px;
+    filter: grayscale(1.2);
+}
+
 .welcome-section {
   text-align: center;
   padding: 20px;
