@@ -100,7 +100,8 @@ if ($showTickets) {
                 </div>
 
                 <h2>Tickets for:
-                    <?= htmlspecialchars($selectedStudent['first_name'] . ' ' . $selectedStudent['last_name']) ?></h2>
+                    <?= htmlspecialchars($selectedStudent['first_name'] . ' ' . $selectedStudent['last_name']) ?>
+                </h2>
                 <p><strong>Email:</strong> <?= htmlspecialchars($selectedStudent['email']) ?></p>
                 <p><strong>Class:</strong> <?= htmlspecialchars($selectedStudent['class_type']) ?></p>
 
@@ -124,7 +125,7 @@ if ($showTickets) {
                             <?php endforeach; ?>
                         <?php else: ?>
                             <div class="empty-state">
-                                <p>No tickets found for this student. 🐰</p>
+                                <p>No tickets found for this student.</p>
                             </div>
                         <?php endif; ?>
                     </div>
@@ -180,7 +181,7 @@ if ($showTickets) {
                 </div>
             <?php else: ?>
                 <div class="empty-state">
-                    <p>No students found. Try a different filter! 🐰</p>
+                    <p>No students found. Try a different filter!</p>
                 </div>
             <?php endif; ?>
         <?php endif; ?>

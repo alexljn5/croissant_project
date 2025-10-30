@@ -37,10 +37,8 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
             <?php if (!$isTeacher): ?>
                 <div class="dashboard-item">
                     <a href="webPages/ticketCreation.php">
-                    <div class="dashboard-icon">
-                    <img src="img/penpapier.png"
-                    alt="Create ticket"
-                        style="width:20px; height:40px; filter:grayscale(1.2);" />
+                        <div class="dashboard-icon">
+                            <img src="img/penandpaper.png" alt="Create ticket" class="create-student-ticket" />
                         </div>
                         <h3>Create Student Ticket</h3>
                         <p>Create new student tickets</p>
@@ -51,10 +49,8 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
             <div class="dashboard-item">
                 <a href="webPages/ticketPage.php">
                     <div class="dashboard-icon">
-                    <img src="img/penpapier.png"
-                    alt="Create ticket"
-                        style="width:40px; height:40px; filter:invert(0.8);" />
-                        </div>
+                        <img src="img/penandpaper.png" alt="Create ticket" class="view-student-ticket" />
+                    </div>
                     <h3>View Student Tickets</h3>
                     <p>View and manage student tickets</p>
                 </a>
@@ -63,10 +59,8 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
             <?php if ($isTeacher): ?>
                 <div class="dashboard-item">
                     <a href="webPages/docentTicketPage.php">
-                    <div class="dashboard-icon">
-                    <img src="img/penpapier.png"
-                    alt="Create ticket"
-                        style="width:40px; height:40px; filter:invert(0.8);" />
+                        <div class="dashboard-icon">
+                            <img src="img/penandpaper.png" alt="Create ticket" class="create-teacher-ticket" />
                         </div>
                         <h3>Create Teacher Ticket</h3>
                         <p>Create new teacher tickets</p>
@@ -74,10 +68,8 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
                 </div>
                 <div class="dashboard-item">
                     <a href="webPages/viewTeacherTickets.php">
-                    <div class="dashboard-icon">
-                    <img src="img/eyes.png"
-                    alt="Create ticket"
-                        style="width:35px; height:35px; filter:grayscale(1.2);" />
+                        <div class="dashboard-icon">
+                            <img src="img/eyes.png" alt="Create ticket" class="view-teacher-ticket" />
                         </div>
                         <h3>View Teacher Tickets</h3>
                         <p>View and manage teacher tickets</p>
@@ -85,10 +77,8 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
                 </div>
                 <div class="dashboard-item">
                     <a href="webPages/classLink.php">
-                    <div class="dashboard-icon">
-                    <img src="img/eyes.png"
-                    alt="Class Link"
-                        style="width:35px; height:35px; filter:grayscale(1.2);" />
+                        <div class="dashboard-icon">
+                            <img src="img/eyes.png" alt="Class Link" class="manage-class-link" />
                         </div>
                         <h3>Manage Class Links</h3>
                         <p>Link students to classes</p>
@@ -99,10 +89,8 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
             <?php if ($isAdmin): ?>
                 <div class="dashboard-item">
                     <a href="webPages/adminPage.php">
-                    <div class="dashboard-icon">
-                    <img src="img/tickItLogo.png"
-                    alt="Create ticket"
-                        style="width:20px; height:40px; filter:grayscale(1.2);" />
+                        <div class="dashboard-icon">
+                            <img src="img/tickItLogo.png" alt="Create ticket" class="admin-panel" />
                         </div>
                         <h3>Admin Panel</h3>
                         <p>System administration</p>
@@ -110,10 +98,8 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
                 </div>
                 <div class="dashboard-item">
                     <a href="webPages/addVakken.php">
-                    <div class="dashboard-icon">
-                    <img src="img/penpapier.png"
-                    alt="Create ticket"
-                        style="width:60px; height:60px; filter:grayscale(1.2);" />
+                        <div class="dashboard-icon">
+                            <img src="img/penpapier.png" alt="Create ticket" class="manage-classes" />
                         </div>
                         <h3>Manage Classes</h3>
                         <p>Add or remove classes</p>
@@ -124,10 +110,8 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
             <div class="dashboard-item">
                 <a href="webPages/studentsPerClass.php">
                     <div class="dashboard-icon">
-                    <img src="img/guy (2).png"
-                    alt="Create ticket"
-                        style="width:40px; height:50px; filter:grayscale(1.2);" />
-                        </div>
+                        <img src="img/guy.png" alt="Create ticket" class="class-overview" />
+                    </div>
                     <h3>Class Overview</h3>
                     <p>View students per class</p>
                 </a>
@@ -136,10 +120,8 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
             <div class="dashboard-item">
                 <a href="logout.php">
                     <div class="dashboard-icon">
-                    <img src="img/Door.png"
-                    alt="Create ticket"
-                        style="width:30px; height:45px; filter:grayscale(1.2);" />
-                        </div>
+                        <img src="img/door.png" alt="Create ticket" class="logout" />
+                    </div>
                     <h3>Logout</h3>
                     <p>Exit your account</p>
                 </a>

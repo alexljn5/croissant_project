@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['link_student'])) {
                 $stmt->execute([$account_id, $class_number]);
             }
             $pdo->commit();
-            $message = "<p class='geldig'>✅ Student successfully linked to selected classes!</p>";
+            $message = "<p class='geldig'>Student successfully linked to selected classes!</p>";
         } catch (PDOException $e) {
             $pdo->rollBack();
             $message = "<p class='ongeldig'>Error linking student: " . htmlspecialchars($e->getMessage()) . "</p>";
