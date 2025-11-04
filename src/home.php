@@ -58,7 +58,7 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
 
             <?php if ($isTeacher): ?>
                 <div class="dashboard-item">
-                    <a href="webPages/docentTicketPage.php">
+                    <a href="webPages/teacherTicketPage.php">
                         <div class="dashboard-icon">
                             <img src="img/penandpaper.png" alt="Create ticket" class="create-teacher-ticket" />
                         </div>
