@@ -26,7 +26,7 @@ try {
     $pdo = new PDO($dsn, $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    die("<p class='ongeldig'>Database error, oh no, Cream is sad! 🐰: " . htmlspecialchars($e->getMessage()) . " (Code: " . $e->getCode() . ")</p>");
+    die("<p class='ongeldig'>Database error, please contact an administrator and report this errorcode: " . htmlspecialchars($e->getMessage()) . " (Code: " . $e->getCode() . ")</p>");
 }
 
 // Initialize message
