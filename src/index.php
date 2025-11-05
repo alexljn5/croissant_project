@@ -1,15 +1,12 @@
 <?php
 session_start();
-
 // Debug flag: set to true to accept plain text passwords (for testing)
 define('DEBUG_PLAINTEXT_PASSWORDS', false);
-
 // Database credentials
 $servername = "db";
 $username = "root";
 $password = "password";
 $dbname = "croissantdb";
-
 try {
   $dsn = "mysql:host=$servername;dbname=$dbname;charset=utf8mb4";
   $pdo = new PDO($dsn, $username, $password);
@@ -17,33 +14,47 @@ try {
 } catch (PDOException $e) {
   die("Database error, please contact an administrator.: " . htmlspecialchars($e->getMessage()) . " (Code: " . $e->getCode() . ")");
 }
-
 $message = "";
-
 // Handle login
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+  $loginInput = isset($_POST['login_input']) ? trim($_POST['login_input']) : '';
   $passwordInput = isset($_POST['password']) ? trim($_POST['password']) : '';
-
-  if (empty($email) || empty($passwordInput)) {
+  if (empty($loginInput) || empty($passwordInput)) {
     $message = "Please fill in all fields.";
   } else {
     try {
-      $stmt = $pdo->prepare("SELECT account_id, email, password, is_teacher, is_admin FROM account WHERE email = ?");
-      $stmt->execute([$email]);
-      $user = $stmt->fetch(PDO::FETCH_ASSOC);
+      $user = null;
+      $accountId = null;
+      // Check if input is <6-digit>@tickit.nl
+      if (preg_match('/^(\d{6})@tickit\.nl$/i', $loginInput, $matches)) {
+        $potentialId = intval($matches[1]);
+        if ($potentialId >= 100000 && $potentialId <= 999999) {
+          $accountId = $potentialId;
+        }
+      }
+      // Otherwise, treat as email
+      else {
+        $stmt = $pdo->prepare("SELECT account_id, email, password, is_teacher, is_admin FROM account WHERE email = ?");
+        $stmt->execute([$loginInput]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+      }
+
+      // If accountId was extracted (from ID or ID@tickit.nl), query by account_id
+      if ($accountId !== null) {
+        $stmt = $pdo->prepare("SELECT account_id, email, password, is_teacher, is_admin FROM account WHERE account_id = ?");
+        $stmt->execute([$accountId]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+      }
 
       if ($user) {
         $passwordMatches = false;
-
         if (DEBUG_PLAINTEXT_PASSWORDS) {
-          //Debug mode: accept plain text
+          // Debug mode: accept plain text
           $passwordMatches = ($passwordInput === $user['password']);
         } else {
           // Production: check hashed password
           $passwordMatches = password_verify($passwordInput, $user['password']);
         }
-
         if ($passwordMatches) {
           $_SESSION['account_id'] = $user['account_id'];
           $_SESSION['email'] = $user['email'];
@@ -52,10 +63,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           $message = "Login successful! Redirecting...";
           header("Refresh: 2; url=/home.php");
         } else {
-          $message = "Invalid email or password.";
+          $message = "Invalid login credentials.";
         }
       } else {
-        $message = "Invalid email or password.";
+        $message = "Invalid login credentials.";
       }
     } catch (PDOException $e) {
       $message = "Error: " . htmlspecialchars($e->getMessage());
@@ -63,7 +74,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -90,8 +100,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </p>
       <?php endif; ?>
       <form action="" method="post">
-        <label>Email:</label>
-        <input class="form-input" type="email" name="email" required>
+        <label>Email or School Email:</label>
+        <input class="form-input" type="text" name="login_input" required>
         <label>Password:</label>
         <input class="form-input" type="password" name="password" required>
         <div class="nav-buttons">

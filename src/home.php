@@ -1,15 +1,12 @@
 <?php
 session_start();
-
 // Check if user is logged in
 if (!isset($_SESSION['account_id'])) {
     header('Location: index.php');
     exit();
 }
-
 // Set flag for included files
 define('INCLUDED', true);
-
 // Get user type for conditional rendering
 $isTeacher = $_SESSION['is_teacher'] ?? false;
 $isAdmin = $_SESSION['is_admin'] ?? false;
@@ -26,41 +23,40 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
 
 <body>
     <?php include 'components/header.php'; ?>
-
     <div class="main-content">
         <div class="welcome-section">
             <h2>Welcome to your Dashboard</h2>
             <p>Email: <?php echo htmlspecialchars($_SESSION['email']); ?></p>
         </div>
-
         <div class="dashboard-grid">
             <?php if (!$isTeacher): ?>
                 <div class="dashboard-item">
                     <a href="webPages/ticketCreation.php">
                         <div class="dashboard-icon">
-                            <img src="img/penandpaper.png" alt="Create ticket" class="create-student-ticket" />
+                            <img src="img/penandpaper.png?<?php echo filemtime('img/penandpaper.png'); ?>"
+                                alt="Create ticket" class="create-student-ticket" />
                         </div>
                         <h3>Create Student Ticket</h3>
                         <p>Create new student tickets</p>
                     </a>
                 </div>
             <?php endif; ?>
-
             <div class="dashboard-item">
                 <a href="webPages/ticketPage.php">
                     <div class="dashboard-icon">
-                        <img src="img/penandpaper.png" alt="Create ticket" class="view-student-ticket" />
+                        <img src="img/penandpaper.png?<?php echo filemtime('img/penandpaper.png'); ?>"
+                            alt="Create ticket" class="view-student-ticket" />
                     </div>
                     <h3>View Student Tickets</h3>
                     <p>View and manage student tickets</p>
                 </a>
             </div>
-
             <?php if ($isTeacher): ?>
                 <div class="dashboard-item">
                     <a href="webPages/teacherTicketPage.php">
                         <div class="dashboard-icon">
-                            <img src="img/penandpaper.png" alt="Create ticket" class="create-teacher-ticket" />
+                            <img src="img/penandpaper.png?<?php echo filemtime('img/penandpaper.png'); ?>"
+                                alt="Create ticket" class="create-teacher-ticket" />
                         </div>
                         <h3>Create Teacher Ticket</h3>
                         <p>Create new teacher tickets</p>
@@ -69,7 +65,8 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
                 <div class="dashboard-item">
                     <a href="webPages/viewTeacherTickets.php">
                         <div class="dashboard-icon">
-                            <img src="img/eyes.png" alt="Create ticket" class="view-teacher-ticket" />
+                            <img src="img/eyes.png?<?php echo filemtime('img/eyes.png'); ?>" alt="Create ticket"
+                                class="view-teacher-ticket" />
                         </div>
                         <h3>View Teacher Tickets</h3>
                         <p>View and manage teacher tickets</p>
@@ -78,57 +75,60 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
                 <div class="dashboard-item">
                     <a href="webPages/classLink.php">
                         <div class="dashboard-icon">
-                            <img src="img/eyes.png" alt="Class Link" class="manage-class-link" />
+                            <img src="img/eyes.png?<?php echo filemtime('img/eyes.png'); ?>" alt="Class Link"
+                                class="manage-class-link" />
                         </div>
                         <h3>Manage Class Links</h3>
                         <p>Link students to classes</p>
                     </a>
                 </div>
             <?php endif; ?>
-
             <?php if ($isAdmin): ?>
                 <div class="dashboard-item">
                     <a href="webPages/adminPage.php">
                         <div class="dashboard-icon">
-                            <img src="img/tickItLogo.png" alt="Create ticket" class="admin-panel" />
+                            <img src="img/tickItLogo.png?<?php echo filemtime('img/tickItLogo.png'); ?>" alt="Create ticket"
+                                class="admin-panel" />
                         </div>
                         <h3>Admin Panel</h3>
                         <p>System administration</p>
                     </a>
                 </div>
+                <!-- Write your comments here --
+                 Not used anymore.
                 <div class="dashboard-item">
                     <a href="webPages/addVakken.php">
                         <div class="dashboard-icon">
-                            <img src="img/penpapier.png" alt="Create ticket" class="manage-classes" />
+                            <img src="img/penandpaper.png?<?php echo filemtime('img/penandpaper.png'); ?>" alt="Create ticket" class="manage-classes" />
                         </div>
                         <h3>Manage Classes</h3>
                         <p>Add or remove classes</p>
                     </a>
+            -->
+            </div>
+        <?php endif; ?>
+        <div class="dashboard-item">
+            <a href="webPages/studentsPerClass.php">
+                <div class="dashboard-icon">
+                    <img src="img/guy.png?<?php echo filemtime('img/guy.png'); ?>" alt="Create ticket"
+                        class="class-overview" />
                 </div>
-            <?php endif; ?>
-
-            <div class="dashboard-item">
-                <a href="webPages/studentsPerClass.php">
-                    <div class="dashboard-icon">
-                        <img src="img/guy.png" alt="Create ticket" class="class-overview" />
-                    </div>
-                    <h3>Class Overview</h3>
-                    <p>View students per class</p>
-                </a>
-            </div>
-
-            <div class="dashboard-item">
-                <a href="logout.php">
-                    <div class="dashboard-icon">
-                        <img src="img/door.png" alt="Create ticket" class="logout" />
-                    </div>
-                    <h3>Logout</h3>
-                    <p>Exit your account</p>
-                </a>
-            </div>
+                <h3>Class Overview</h3>
+                <p>View students per class</p>
+            </a>
+        </div>
+        <div class="dashboard-item">
+            <a href="logout.php">
+                <div class="dashboard-icon">
+                    <img src="img/door.png?<?php echo filemtime('img/door.png'); ?>" alt="Create ticket"
+                        class="logout" />
+                </div>
+                <h3>Logout</h3>
+                <p>Exit your account</p>
+            </a>
         </div>
     </div>
-
+    </div>
     <?php include 'components/footer.php'; ?>
 </body>
 
