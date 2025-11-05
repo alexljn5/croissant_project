@@ -83,10 +83,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ':address' => $address,
         ':postal_code' => $postal_code
       ]);
-      $message = "✅ Success! User added. Account ID: " . htmlspecialchars($account_id);
+      $message = "Success! Account ID: " . htmlspecialchars($account_id . " Please login with your email or your account ID and @tickit.nl.");
     }
   } catch (PDOException $e) {
-    $message = "❌ Error: " . htmlspecialchars($e->getMessage());
+    $message = "Error: " . htmlspecialchars($e->getMessage());
   }
 }
 ?>
@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
   <div class="page-wrapper">
     <div class="outer-div">
-      <div class="registreren">
+      <div class="register">
         <h1 class="page-title">Register</h1>
       </div>
 

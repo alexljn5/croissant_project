@@ -102,7 +102,7 @@ try {
 
     <div class="page-wrapper">
         <div class="outer-div">
-            <div class="registreren">
+            <div class="register">
                 <h1 class="page-title">Manage Student-Class Links</h1>
             </div>
 

@@ -602,8 +602,8 @@ body {
   color: #282828;
 }
 
-/* paragraaf */
-.bodem p {
+/* paragraph */
+.bottom p {
   align-items: left;
   margin-top: 15px;
   margin-right: 50px;
@@ -617,7 +617,7 @@ body {
 }
 
 /* links */
-.bodem a {
+.bottom a {
   align-items: left;
   font-family: system-ui;
   color: #cb7e8f;
@@ -764,7 +764,7 @@ body {
   align-items: center;
 }
 
-.bodem {
+.bottom {
   flex-shrink: 0;
   height: 50px;
   display: flex;
@@ -777,7 +777,7 @@ body {
   margin-top: auto;
 }
 
-.bodem,
+.bottom,
 p {
   font-family: sans-serif;
   font-weight: lighter;
@@ -815,7 +815,7 @@ p {
   text-align: center;
 }
 
-.registreren {
+.register {
   text-align: center;
 }
 
